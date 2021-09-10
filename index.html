@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona2</title>
+    <script>
+        fetch('')
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                return 'Nie udało się pobrać listy folderów';
+            });
+    </script>
+</head>
+<body>
+</body>
+</html>
