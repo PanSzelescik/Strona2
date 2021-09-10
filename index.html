@@ -4,15 +4,33 @@
     <meta charset="UTF-8">
     <title>Strona2</title>
     <script>
-        fetch('')
+        fetch('https://api.github.com/repos/PanSzelescik/Strona2/git/trees/main')
             .then((response) => {
                 if (response.ok) {
                     return response.json();
                 }
-                return 'Nie udało się pobrać listy folderów';
+                const err = new Error('Response is not ok');
+                err.response = response;
+                throw err;
+            })
+            .then(({tree = []}) => tree.filter(({type}) => type === 'tree'))
+            .then((dirs) => dirs.map(({path}) => `<li><a href="/Strona2/${path}/">${path}</a></li>`))
+            .then((list) => {
+                if (list.length > 0) {
+                    document.write(`<ul>${list.join('')}</ul>`);
+                } else {
+                    document.write('<p>Nie znaleziono żadnych folderów ☹️</p>')
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                document.write('Wystąpił błąd!')
             });
     </script>
 </head>
 <body>
+<div class="main">
+    <p>Ładowanie...</p>
+</div>
 </body>
 </html>
