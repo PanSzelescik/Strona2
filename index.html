@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Strona2</title>
     <script>
+        function setText(text) {
+            document.getElementById('main').innerHTML = text;
+        }
+
         fetch('https://api.github.com/repos/PanSzelescik/Strona2/git/trees/main')
             .then((response) => {
                 if (response.ok) {
@@ -17,19 +21,19 @@
             .then((dirs) => dirs.map(({path}) => `<li><a href="/Strona2/${path}/">${path}</a></li>`))
             .then((list) => {
                 if (list.length > 0) {
-                    document.write(`<ul>${list.join('')}</ul>`);
+                    setText(`<ul>${list.join('')}</ul>`);
                 } else {
-                    document.write('<p>Nie znaleziono żadnych folderów ☹️</p>')
+                    setText('<p>Nie znaleziono żadnych folderów ☹️</p>')
                 }
             })
             .catch((err) => {
                 console.error(err);
-                document.write('Wystąpił błąd!')
+                setText('<p>Wystąpił błąd!</p>')
             });
     </script>
 </head>
 <body>
-<div class="main">
+<div id="main">
     <p>Ładowanie...</p>
 </div>
 </body>
