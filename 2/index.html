@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>2</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <table>
+        <tr>
+            <td>a</td>
+            <td id="a"></td>
+        </tr>
+        <tr>
+            <td>b</td>
+            <td id="b"></td>
+        </tr>
+        <tr>
+            <td>Dodawanie</td>
+            <td id="dodawanie"></td>
+        </tr>
+        <tr>
+            <td>Odejmowanie</td>
+            <td id="odejmowanie"></td>
+        </tr>
+        <tr>
+            <td>Mnożenie</td>
+            <td id="mnozenie"></td>
+        </tr>
+        <tr>
+            <td>Dzielenie</td>
+            <td id="dzielenie"></td>
+        </tr>
+    </table>
+    <script>
+        const a = +prompt('Podaj pierwszą liczbę');
+        const b = +prompt('Podaj drugą liczbę');
+        
+        document.getElementById('a').innerText = a;
+        document.getElementById('b').innerText = b;
+
+        document.getElementById('dodawanie').innerText = a + b;
+        document.getElementById('odejmowanie').innerText = a - b;
+        document.getElementById('mnozenie').innerText = a * b;
+        document.getElementById('dzielenie').innerText = a / b;
+    </script>
+</body>
+</html>
