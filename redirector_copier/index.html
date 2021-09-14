@@ -4,15 +4,61 @@
     <meta charset="UTF-8">
     <title>Redirector & Copier</title>
     <meta name="viewport" content="width=device-width">
+    <style>
+        #generated_url {
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
     <script>
         async function copy() {
             const params = new URLSearchParams(window.location.search);
+            const base_url = 'https://panszelescik.github.io/Strona2/redirector_copier/';
 
             if (!params.has('text') && !params.has('url')) {
-                const example = `https://panszelescik.github.io/Strona2/redirector_copier/?url=${encodeURIComponent('https://github.com/')}&text=${encodeURIComponent('Tekst do skopiowania ęąśżźćń')}`;
-                document.write(`<p>Nie podałeś żadnego tekstu do skopiowania, ani adresu do przekierowania!</p><p>Przykład: <a href="${example}">${example}</a></p>`);
+                const example = `${base_url}?url=${encodeURIComponent('https://github.com/')}&text=${encodeURIComponent('Tekst do skopiowania ęąśżźćń')}`;
+                const text = `
+                <p>Nie podałeś żadnego tekstu do skopiowania, ani adresu do przekierowania!</p>
+                <p>Przykład: <a href="${example}">${example}</a></p>
+
+                <p>Generator linków</p>
+                <label for="url">URL</label>
+                <input type="text" id="url" name="url"/>
+
+                <label for="text">Tekst</label>
+                <input type="text" id="text" name="text"/>
+
+                <label for="encode">Zakoduj</label>
+                <input type="checkbox" id="encode" name="encode"/>
+
+                <button id="generate">Wygeneruj!</button>
+                <p id="generated_url"></p>
+                `;
+                document.write(text);
+
+                document.getElementById('generate').addEventListener('click', () => {
+                    const params = new URLSearchParams();
+
+                    const text = document.getElementById('text').value;
+                    if (text) {
+                        params.append('text', text);
+                    }
+
+                    const url = document.getElementById('url').value;
+                    if (url) {
+                        const encode = document.getElementById('encode').checked;
+
+                        if (encode) {
+                            params.append('url', btoa(url));
+                            params.append('encode', 1);
+                        } else {
+                            params.append('url', url);
+                        }
+                    }
+
+                    document.getElementById('generated_url').innerText = `${base_url}?${params.toString()}`;
+                });
                 return;
             }
 
@@ -24,7 +70,11 @@
             }
 
             if (params.has('url')) {
-                const url = params.get('url');
+                let url = params.get('url');
+
+                if (params.has('encode')) {
+                    url = atob(url);
+                }
 
                 document.write(`<p>Przenoszenie na: <a href="${url}">${url}</a>...</p>`);
                 location.href = url;
