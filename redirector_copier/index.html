@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirector & Copier</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <script>
+        async function copy() {
+            const params = new URLSearchParams(window.location.search);
+
+            if (!params.has('text') && !params.has('url')) {
+                const example = `https://panszelescik.github.io/Strona2/redirector_copier/?url=${encodeURIComponent('https://github.com/')}&text=${encodeURIComponent('Tekst do skopiowania ęąśżźćń')}`;
+                document.write(`<p>Nie podałeś żadnego tekstu do skopiowania, ani adresu do przekierowania!</p><p>Przykład: <a href="${example}">${example}</a></p>`);
+                return;
+            }
+
+            if (params.has('text')) {
+                const text = params.get('text');
+
+                document.write(`<p>Kopiowanie do schowka: <b>${text}</b>...</p>`);
+                await navigator.clipboard.writeText(text);
+            }
+
+            if (params.has('url')) {
+                const url = params.get('url');
+
+                document.write(`<p>Przenoszenie na: <a href="${url}">${url}</a>...</p>`);
+                location.href = url;
+            }
+        }
+
+        copy();
+    </script>
+</body>
+</html>
