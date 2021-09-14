@@ -17,7 +17,7 @@
         while (true) {
             const value = +prompt(`Podaj ocenę z przedmiotu.\n${podaneOceny()}Kliknij Anuluj, aby obliczyć średnią.`);
 
-            if (Number.isNaN(value) || value === 0) {
+            if (Number.isNaN(value) || value <= 0) {
                 break;
             }
 
