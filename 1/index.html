@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>1</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Imię</td>
+            <td id="imie"></td>
+        </tr>
+        <tr>
+            <td>Nazwisko</td>
+            <td id="nazwisko"></td>
+        </tr>
+        <tr>
+            <td>E-Mail</td>
+            <td id="email"></td>
+        </tr>
+        <tr>
+            <td>Adres</td>
+            <td id="adres"></td>
+        </tr>
+    </table>
+    <script>
+        function set(text, id) {
+            const variable = prompt(text);
+            document.getElementById(id).innerHTML = variable;
+        }
+
+        set('Podaj imię', 'imie');
+        set('Podaj nazwisko', 'nazwisko');
+        set('Podaj e-mail', 'email');
+        set('Podaj adres', 'adres');
+    </script>
+</body>
+</html>
