@@ -7,7 +7,6 @@
 </head>
 <body>
     <script>
-        let i = 0;
         let oceny = [];
 
         function podaneOceny() {
@@ -20,13 +19,12 @@
             if (Number.isNaN(value) || value <= 0) {
                 break;
             }
-
-            i++;
+            
             oceny.push(value);
         }
 
         document.write('Twoja średnia: ');
-        document.write(oceny.reduce((a, b) => a + b, 0) / i);
+        document.write(oceny.reduce((a, b) => a + b, 0) / oceny.length);
     </script>
 </body>
 </html>
