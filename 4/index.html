@@ -19,11 +19,13 @@
             if (Number.isNaN(value) || value <= 0) {
                 break;
             }
-            
+
             oceny.push(value);
         }
 
-        document.write('Twoja średnia: ');
+        document.write('Podane oceny: ');
+        document.write(oceny.join(', '));
+        document.write('<br>Twoja średnia: ');
         document.write(oceny.reduce((a, b) => a + b, 0) / oceny.length);
     </script>
 </body>
