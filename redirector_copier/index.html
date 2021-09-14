@@ -11,6 +11,9 @@
     </style>
 </head>
 <body>
+    <p id="copy_text"></p>
+    <p id="redirect_text"></p>
+
     <script>
         async function copy() {
             const params = new URLSearchParams(window.location.search);
@@ -65,7 +68,7 @@
             if (params.has('text')) {
                 const text = params.get('text');
 
-                document.write(`<p>Kopiowanie do schowka: <b>${text}</b>...</p>`);
+                document.getElementById('copy_text').innerHTML = `Kopiowanie do schowka: <b>${text}</b>...`;
                 await navigator.clipboard.writeText(text);
             }
 
@@ -76,7 +79,7 @@
                     url = atob(url);
                 }
 
-                document.write(`<p>Przenoszenie na: <a href="${url}">${url}</a>...</p>`);
+                document.getElementById('redirect_text').innerHTML = `<p>Przenoszenie na: <a href="${url}">${url}</a>...`;
                 location.href = url;
             }
         }
