@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>4</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <script>
+        let i = 0;
+        let oceny = [];
+
+        function podaneOceny() {
+            return oceny.length > 0 ? `Podane oceny: ${oceny.join(', ')}\n` : '';
+        }
+
+        while (true) {
+            const value = +prompt(`Podaj ocenę z przedmiotu.\n${podaneOceny()}Kliknij Anuluj, aby obliczyć średnią.`);
+
+            if (Number.isNaN(value) || value === 0) {
+                break;
+            }
+
+            i++;
+            oceny.push(value);
+        }
+
+        document.write('Twoja średnia: ');
+        document.write(oceny.reduce((a, b) => a + b, 0) / i);
+    </script>
+</body>
+</html>
