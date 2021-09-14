@@ -6,14 +6,17 @@
 </head>
 <body>
     <img id="zdjecie" src="https://ocdn.eu/pulscms-transforms/1/iW-k9kpTURBXy9mOTk1NzZhNTY3YjhlYjljZWQ3MDcxMGJjNWEzZTZhNy5qcGeTlQMAFs0C1M0Bl5MFzQMUzQG8kwmmNTk2MTk0BoGhMAE/gettyimages-954867550.jpg" alt="Zdjęcie"/>
+    <button id="stop">Zatrzymaj/wznów obracanie</button>
     <script>
+        let working = true;
+        let i = 0;
+
         function wait(time) {
             return new Promise(resolve => setTimeout(resolve, time))
         }
 
         async function init() {
-            let i = 0;
-            while (true) {
+            while (working) {
                 document.getElementById('zdjecie').style.transform = `rotate(${i}deg)`;
                 i++;
                 if (i > 360) {
@@ -22,6 +25,13 @@
                 await wait(1);
             }
         }
+
+        document.getElementById('stop').addEventListener('click', () => {
+            working = !working;
+            if (working) {
+                init();
+            }
+        });
 
         init();
     </script>
