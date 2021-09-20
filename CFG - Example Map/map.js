@@ -39,6 +39,11 @@ map.on('locationfound', (e) => {
         .addTo(map);
 });
 
+map.on('locationerror', (err) => {
+    console.error(err);
+    alert(err.message);
+});
+
 /*map.on('click', (e) => {
     const coord = e.latlng;
     const lat = coord.lat;
