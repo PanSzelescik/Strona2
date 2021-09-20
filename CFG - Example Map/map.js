@@ -1,3 +1,5 @@
+setHeight();
+
 const firstX = 52.325;
 const firstY = 17.565;
 const firstZoom = 13;
@@ -47,6 +49,12 @@ map.on('locationerror', (err) => {
     console.error(err);
     alert(err.message);
 });
+
+window.addEventListener('resize', setHeight);
+
+function setHeight() {
+    document.getElementById('map').style.height = `${window.innerHeight - 16}px`;
+}
 
 /*map.on('click', (e) => {
     const coord = e.latlng;
