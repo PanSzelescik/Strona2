@@ -56,9 +56,5 @@ function setHeight() {
     document.getElementById('map').style.height = `${window.innerHeight - 16}px`;
 }
 
-/*map.on('click', (e) => {
-    const coord = e.latlng;
-    const lat = coord.lat;
-    const lng = coord.lng;
-    console.log(`You clicked the map at latitude: ${lat} and longitude: ${lng}`);
-});*/
+// Logger kliknięć do konsoli F12
+map.on('click', (e) => console.log([e.latlng.lat, e.latlng.lng]));
