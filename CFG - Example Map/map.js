@@ -17,13 +17,27 @@ fetch('https://panszelescik.github.io/Strona2/CFG%20-%20Example%20Map/markers.js
         throw err;
     })
     .then((array) => {
-        const markers = array.map((object) => {
-            const marker = L.marker(object.coords).addTo(map);
-            marker.bindPopup(`<b>${object.name}</b><br>${object.description}`);
-            return marker;
+        array.forEach((object) => {
+            L.marker(object.coords)
+                .addTo(map)
+                .bindPopup(`<b>${object.name}</b><br>${object.description}`);
         })
     })
     .catch(console.error);
+
+map.locate({setView: true, maxZoom: 16});
+
+map.on('locationfound', (e) => {
+    const radius = e.accuracy;
+
+    L.marker(e.latlng)
+        .addTo(map)
+        .bindPopup("Jesteś w zasięgu " + radius + " metrów od tego punktu.")
+        .openPopup();
+
+    L.circle(e.latlng, radius)
+        .addTo(map);
+});
 
 /*map.on('click', (e) => {
     const coord = e.latlng;
