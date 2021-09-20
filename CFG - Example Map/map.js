@@ -25,7 +25,11 @@ fetch('https://panszelescik.github.io/Strona2/CFG%20-%20Example%20Map/markers.js
     })
     .catch(console.error);
 
-map.locate({setView: true, maxZoom: 16});
+map.locate({
+    setView: true,
+    maxZoom: 16,
+    timeout: Infinity
+});
 
 map.on('locationfound', (e) => {
     const radius = e.accuracy;
