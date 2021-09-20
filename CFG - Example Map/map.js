@@ -7,11 +7,25 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-const marker = L.marker([52.32770097964147, 17.57949829101563]).addTo(map);
-marker.bindPopup("<b>Hello world!</b><br>I am a popup.");
-marker.on('click', console.log)
+fetch('https://panszelescik.github.io/Strona2/CFG%20-%20Example%20Map/markers.json')
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        }
+        const err = new Error('Response is not ok');
+        err.response = response;
+        throw err;
+    })
+    .then((array) => {
+        const markers = array.map((object) => {
+            const marker = L.marker(object.coords).addTo(map);
+            marker.bindPopup(`<b>${object.name}</b><br>${object.description}`);
+            return marker;
+        })
+    })
+    .catch(console.error);
 
-/*map.on('click', e => {
+/*map.on('click', (e) => {
     const coord = e.latlng;
     const lat = coord.lat;
     const lng = coord.lng;
