@@ -12,6 +12,7 @@
         <option value="-">-</option>
         <option value="*">*</option>
         <option value="/">/</option>
+        <option value="**">**</option>
     </select>
     <input type="number" name="b" id="b"/>
     <input type="button" value="Oblicz" onclick="oblicz()"/>
@@ -36,6 +37,9 @@
                     break;
                 case '/':
                     wynik = a / b;
+                    break;
+                case '**':
+                    wynik = a ** b;
                     break;
                 default:
                     wynik = 'Nieznane działanie!'
