@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>5</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <form>
+        <label for="text1">Tekst 1</label>
+        <input type="text" name="text1" id="text1"/>
+        <br>
+
+        <label for="number1">Liczba 1</label>
+        <input type="number" name="number1" id="number1"/>
+        <br>
+
+        <label for="number2">Liczba 2</label>
+        <input type="number" name="number2" id="number2"/>
+        <br>
+
+        <input type="button" value="Wyświetl" onclick="wyswietl()"/>
+    </form>
+    <div>
+        <table border="1">
+            <tr>
+                <td>Tekst</td>
+                <td id="tekst"></td>
+            </tr>
+            <tr>
+                <td>Suma</td>
+                <td id="suma"></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function wyswietl() {
+            const text1 = document.getElementById('text1').value;
+            const number1 = +document.getElementById('number1').value;
+            const number2 = +document.getElementById('number2').value;
+            
+            document.getElementById('tekst').innerText = text1;
+            document.getElementById('suma').innerText = number1 + number2;
+        }
+    </script>
+</body>
+</html>
