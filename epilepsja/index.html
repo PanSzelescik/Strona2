@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Epilepsja</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <script src="../wait.js"></script>
+    <script>
+        const value = confirm('Ta strona może wywołać atak epilepsji, czy chcesz kontynuować?');
+        if (value) {
+            function getRandomInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min)) + min;
+            }
+
+            async function work() {
+                while (true) {
+                    document.body.style['background-color'] = `rgb(${getRandomInt(0, 256)},${getRandomInt(0, 256)},${getRandomInt(0, 256)})`;
+                    await wait(1);
+                }
+            }
+            work();
+        }
+    </script>
+</body>
+</html>
