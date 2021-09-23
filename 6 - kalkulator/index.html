@@ -16,7 +16,7 @@
     </select>
     <input type="number" name="b" id="b"/>
     <input type="button" value="Oblicz" onclick="oblicz()"/>
-    <p id="wynik"></p>
+    <input type="number" name="wynik" id="wynik" disabled/>
     <script>
         function oblicz() {
             const a = +document.getElementById('a').value;
@@ -45,7 +45,7 @@
                     wynik = 'Nieznane działanie!'
             }
 
-            document.getElementById('wynik').innerText = wynik;
+            document.getElementById('wynik').value = wynik;
         }
     </script>
 </body>
