@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<form id="form" method="post" action="http://crawcik.space:8080/api/auth/signup">
+    <label for="username">username</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="password">password</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <input type="submit" value="Zaloguj się" id="submit">
+    <p id="progress"></p>
+</form>
+<script src="../cookie.js"></script>
+<script>
+    document.getElementById('submit').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('progress').innerText = 'Logowanie...';
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('http://crawcik.space:8080/api/auth/signin', {
+            method: 'POST',
+            body: JSON.stringify({
+                username,
+                password
+            }),
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw new Error('Error or unauthorized')
+            })
+            .then(json => {
+                setCookie('cfg_session', JSON.stringify(json), 1);
+                document.getElementById('progress').innerText = 'Zalogowano!';
+            })
+            .catch(err => {
+                console.error(err);
+                alert(err.message);
+                document.getElementById('progress').innerText = 'Wystąpił błąd. Spróbuj jeszcze raz!';
+            });
+    });
+</script>
+</body>
+</html>
