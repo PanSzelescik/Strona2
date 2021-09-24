@@ -3,7 +3,9 @@ setHeight();
 const firstX = 52.325;
 const firstY = 17.565;
 const firstZoom = 13;
-const map = L.map('map').setView([firstX, firstY], firstZoom);
+const map = L.map('map', {
+    fullscreenControl: true
+}).setView([firstX, firstY], firstZoom);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -27,7 +29,7 @@ fetch('https://panszelescik.github.io/Strona2/CFG%20-%20Example%20Map/markers.js
     })
     .catch(console.error);
 
-map.locate({
+/*map.locate({
     setView: true,
     maxZoom: 16,
     timeout: Infinity
@@ -48,13 +50,13 @@ map.on('locationfound', (e) => {
 map.on('locationerror', (err) => {
     console.error(err);
     alert(err.message);
-});
+});*/
 
 window.addEventListener('resize', setHeight);
+
+// Logger kliknięć do konsoli F12
+map.on('click', (e) => console.log([e.latlng.lat, e.latlng.lng]));
 
 function setHeight() {
     document.getElementById('map').style.height = `${window.innerHeight - 16}px`;
 }
-
-// Logger kliknięć do konsoli F12
-map.on('click', (e) => console.log([e.latlng.lat, e.latlng.lng]));
