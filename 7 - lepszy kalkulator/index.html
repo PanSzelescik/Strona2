@@ -105,7 +105,7 @@
             try {
                 const screen = document.getElementById('screen');
                 const button = e.target.value;
-                const operators = ['+', '-', '*', '/'];
+                const operators = ['+', '-', '*', '/', '.'];
 
                 switch (button) {
                     case 'C':
@@ -117,6 +117,12 @@
                         screen.value = array.join('');
                         break;
                     case '=':
+                        const operatorLast = operators.find((operator) => screen.value.endsWith(operator));
+                        if (operatorLast) {
+                            const array = [...screen.value];
+                            array.pop();
+                            screen.value = array.join('');
+                        }
                         screen.value = eval(screen.value);
                         break;
                     default:
