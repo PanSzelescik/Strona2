@@ -112,7 +112,9 @@
                         screen.value = '';
                         break;
                     case '←':
-                        screen.value = [...screen.value].splice(1).join('');
+                        const array = [...screen.value];
+                        array.pop();
+                        screen.value = array.join('');
                         break;
                     case '=':
                         screen.value = eval(screen.value);
