@@ -136,7 +136,7 @@
                     default:
                         const operator = operators.includes(button);
                         const operatorIsLast = operators.find((operator) => screen.value.endsWith(operator));
-                        if (!(operatorIsLast && operator)) {
+                        if (!((screen.value === '' || operatorIsLast) && operator)) {
                             screen.value += button;
                         }
                 }
