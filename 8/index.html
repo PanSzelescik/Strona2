@@ -13,6 +13,9 @@
             array[i] = i + 1;
             array[50 + i] = 100 - i;
         }
+        for (var zmienna in array) {
+            console.log(zmienna, array[zmienna]);
+        }
         document.getElementById('table').innerHTML = array.map((value, index) => `<tr><td>${index}</td><td>${value}</td></tr>`).join('');
     </script>
 </body>
