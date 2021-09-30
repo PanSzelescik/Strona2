@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>8</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <table id="table" border="1"></table>
+    <script>
+        const array = [];
+        for (let i = 0; i < 50; i++) {
+            array[i] = i + 1;
+            array[50 + i] = 100 - i;
+        }
+        document.getElementById('table').innerHTML = array.map((value, index) => `<tr><td>${index}</td><td>${value}</td></tr>`).join('');
+    </script>
+</body>
+</html>
