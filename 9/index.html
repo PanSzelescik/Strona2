@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>9</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <table id="table" border="1"></table>
+    <script>
+        const tablica = [
+            ['A1', 'B1', 'C1'],
+            ['A2', 'B2', 'C2']
+        ];
+
+        document.getElementById('table').innerHTML = tablica.map((tablica2) => `<tr>${tablica2.map((value) => `<td>${value}</td>`).join('')}</tr>`).join('');
+    </script>
+</body>
+</html>
