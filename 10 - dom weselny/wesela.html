@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Dom Weselny</title>
+    <link rel="stylesheet" href="styl5.css"/>
+</head>
+<body>
+    <div id="baner" class="flex">
+        <img src="logo.png" alt="Logo" height="70"/>
+        <p>Dom Weselny zorganizuje wesele za Ciebie</p>
+        <img src="logo.png" alt="Logo" height="70"/>
+    </div>
+    <div class="flex">
+        <div id="panel_lewy">
+            <h2>Dom Weselny</h2>
+            <p>ul. Przemysłowa 5</p>
+            <p>Kalisz</p>
+            <p><a href="logo.png">Pobierz logo</a></p>
+        </div>
+        <div id="panel_srodkowy">
+            <h2>Oferujemy</h2>
+            <ul>
+                <li>Wesela</li>
+                <li>Bankiety</li>
+                <li>Konferencje</li>
+            </ul>
+        </div>
+        <div id="panel_prawy">
+            <p>
+                <a href="Regulamin.txt">czytaj regulamin</a>
+            </p>
+        </div>
+    </div>
+    <div id="panel_dolny">
+        <h2>Ile będzie kosztowało moje wesele?</h2>
+        <label for="goscie">Podaj liczbę gości: </label>
+        <input id="goscie" type="number"/>
+        <br>
+        <input id="poprawiny" type="checkbox"/>
+        <label for="poprawiny">Wesele z poprawinami?</label>
+        <br>
+        <button id="oblicz">Oblicz koszt</button>
+        <p id="wynik"></p>
+    </div>
+    <div id="stopka">
+        <p>Stronę internetową opracował: <i>00000000000</i></p>
+    </div>
+    <script>
+        document.getElementById('oblicz').addEventListener('click', () => {
+            const goscie = document.getElementById('goscie').value;
+            const poprawiny = document.getElementById('poprawiny').checked;
+            let koszt = goscie * 100;
+            if (poprawiny) {
+                koszt *= 1.3;
+            }
+            document.getElementById('wynik').innerText = `Koszt Twojego wesela to ${koszt} złotych`;
+        });
+    </script>
+</body>
+</html>

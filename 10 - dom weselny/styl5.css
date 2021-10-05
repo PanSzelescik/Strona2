@@ -1,0 +1,71 @@
+/* Wyzerowanie odstępów, zmiana czcionki */
+body {
+    margin: 0;
+}
+
+#panel_dolny h2 {
+    margin-top: 0;
+}
+
+#stopka p {
+    margin: 0;
+}
+
+#baner p {
+    margin-bottom: 0;
+    margin-top: auto;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+/* flex */
+.flex {
+    display: flex;
+}
+
+/* CSS */
+#baner {
+    background-color: #1C59A7;
+    color: white;
+    text-align: center;
+    height: 80px;
+
+    /* Wyśrodkowanie */
+    justify-content: center;
+}
+
+#panel_lewy {
+    background-color: #3A70B5;
+    width: 33%;
+    height: 200px;
+}
+
+#panel_srodkowy {
+    background-color: #5A8AC8;
+    width: 33%;
+    height: 200px;
+}
+
+#panel_prawy {
+    background-color: #86ACDD;
+    text-align: center;
+    width: 34%;
+    height: 200px;
+}
+
+#panel_dolny {
+    background-color: #86ACDD;
+    text-align: center;
+    height: 300px;
+}
+
+#stopka {
+    background-color: #1C59A7;
+    color: white;
+}
+
+#panel_prawy a {
+    background-color: yellow;
+    color: blue;
+    padding: 10px;
+}
