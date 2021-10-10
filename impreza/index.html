@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Impreza</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<label>
+    Szybkość zmiany koloru (mniej = szybciej)
+    <input id="speed_color" type="number" min="1" value="1"/>
+</label>
+<br>
+<label>
+    Szybkość zmiany pozycji okna (mniej = szybciej)
+    <input id="speed_window" type="number" min="1" value="200"/>
+</label>
+<br>
+<button id="rozpocznij">Rozpocznij</button>
+<script>
+    function onClick() {
+        const settings = {
+            speed_color: document.getElementById('speed_color').value,
+            speed_window: document.getElementById('speed_window').value
+        };
+        const popup = window.open(`../epilepsja/index.html?${Object.entries(settings).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&')}`, 'Impreza', 'resizable=no, width=640, height=580');
+    }
+
+    document.getElementById('rozpocznij').addEventListener('click', onClick);
+</script>
+</body>
+</html>

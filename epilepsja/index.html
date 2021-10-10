@@ -4,25 +4,44 @@
     <meta charset="UTF-8">
     <title>Epilepsja</title>
     <meta name="viewport" content="width=device-width">
+    <script>
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+
+        function setWindow() {
+            window.resizeTo(getRandomInt(400, screen.width / 2), getRandomInt(350, screen.height / 2));
+            window.moveTo(getRandomInt(0, screen.width), getRandomInt(0, screen.height));
+        }
+
+        window.onload = function () {
+            setInterval(setWindow, +params.get('speed_window') || 200);
+            return true;
+        }
+
+        window.oncontextmenu = function () {
+            return false;
+        }
+
+        window.onbeforeunload = function () {
+            return "Epilepsja";
+        }
+    </script>
 </head>
 <body>
     <script src="../wait.js"></script>
     <script>
         const value = confirm('Ta strona może wywołać atak epilepsji, czy chcesz kontynuować?');
         if (value) {
-            function getRandomInt(min, max) {
-                min = Math.ceil(min);
-                max = Math.floor(max);
-                return Math.floor(Math.random() * (max - min)) + min;
+            function changeColor() {
+                document.body.style['background-color'] = `rgb(${getRandomInt(0, 256)},${getRandomInt(0, 256)},${getRandomInt(0, 256)})`;
             }
 
-            async function work() {
-                while (true) {
-                    document.body.style['background-color'] = `rgb(${getRandomInt(0, 256)},${getRandomInt(0, 256)},${getRandomInt(0, 256)})`;
-                    await wait(1);
-                }
-            }
-            work();
+            setInterval(changeColor, +params.get('speed_color') || 1)
         }
     </script>
 </body>
