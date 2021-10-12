@@ -15,7 +15,7 @@
 
         function setWindow() {
             window.resizeTo(getRandomInt(400, screen.width / 2), getRandomInt(350, screen.height / 2));
-            window.moveTo(getRandomInt(0, screen.width), getRandomInt(0, screen.height));
+            window.moveTo(getRandomInt(0, screen.width - window.innerWidth), getRandomInt(0, screen.height - window.innerHeight));
         }
 
         window.onload = function () {
@@ -33,7 +33,7 @@
     </script>
 </head>
 <body>
-    <script src="../wait.js"></script>
+    <p id="text"></p>
     <script>
         const value = confirm('Ta strona może wywołać atak epilepsji, czy chcesz kontynuować?');
         if (value) {
@@ -41,7 +41,17 @@
                 document.body.style['background-color'] = `rgb(${getRandomInt(0, 256)},${getRandomInt(0, 256)},${getRandomInt(0, 256)})`;
             }
 
-            setInterval(changeColor, +params.get('speed_color') || 1)
+            function changeColorFrame() {
+                changeColor();
+                window.requestAnimationFrame(changeColorFrame);
+            }
+
+            const speed_color = +params.get('speed_color') || 0;
+            if (speed_color === 0) {
+                window.requestAnimationFrame(changeColorFrame);
+            } else {
+                setInterval(changeColor, speed_color);
+            }
         }
     </script>
 </body>
