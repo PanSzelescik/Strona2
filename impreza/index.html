@@ -16,17 +16,25 @@
     <input id="speed_window" type="number" min="1" value="200"/>
 </label>
 <br>
-<button id="rozpocznij">Rozpocznij</button>
+<button id="button">Otwórz / zamknij</button>
 <script>
+    let popup;
+    const button = document.getElementById('button');
+
     function onClick() {
-        const settings = {
-            speed_color: document.getElementById('speed_color').value,
-            speed_window: document.getElementById('speed_window').value
-        };
-        const popup = window.open(`../epilepsja/index.html?${Object.entries(settings).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&')}`, 'Impreza', 'resizable=no, width=640, height=580');
+        if (!popup || popup?.closed) {
+            const settings = {
+                speed_color: document.getElementById('speed_color').value,
+                speed_window: document.getElementById('speed_window').value
+            };
+            popup = window.open(`../epilepsja/index.html?${Object.entries(settings).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&')}`, 'Impreza', 'resizable=no, width=640, height=580');
+        } else {
+            popup.close();
+            popup = null;
+        }
     }
 
-    document.getElementById('rozpocznij').addEventListener('click', onClick);
+    button.addEventListener('click', onClick);
 </script>
 </body>
 </html>
