@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>12 - Math</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <p>Zajrzyj do konsoli pod F12 aby zobaczyć wyniki.</p>
+    <script>
+        // Wartość bezwzględna
+        console.log('Wartość bezwzględna');
+        console.log(Math.abs(-3));
+        console.log(Math.abs(5));
+
+        // Pierwiastek kwadratowy
+        console.log('Pierwiastek kwadratowy');
+        console.log(Math.sqrt(4));
+        console.log(Math.sqrt(3));
+        console.log(Math.pow(4, 1 / 2));
+
+        // Pierwiastek sześcienny
+        console.log('Pierwiastek sześcienny');
+        console.log(Math.cbrt(8));
+        console.log(Math.cbrt(7));
+        console.log(Math.pow(8, 1 / 3));
+
+        // Zaokrąglanie w górę
+        console.log('Zaokrąglanie w górę');
+        console.log(Math.ceil(Math.sqrt(3)));
+        console.log(Math.ceil(Math.sqrt(2)));
+
+        // Zaokrąglanie w dół
+        console.log('Zaokrąglanie w dół');
+        console.log(Math.floor(Math.sqrt(3)));
+        console.log(Math.floor(Math.sqrt(2)));
+
+        // Zaokrąglanie (matematyczne)
+        console.log('Zaokrąglanie (matematyczne)');
+        console.log(Math.round(Math.sqrt(3)));
+        console.log(Math.round(Math.sqrt(2)));
+        console.log(Math.round(1.5));
+
+        // Potęgowanie
+        console.log('Potęgowanie');
+        console.log(Math.pow(2, 2));
+        console.log(Math.pow(2, 3));
+
+        // sinus i cosinus
+        console.log('sinus i cosinus');
+        console.log(Math.sin(30 * Math.PI / 180)); // Liczbę należy podać w radianach lub (kąt * pi / 180)
+        console.log(Math.cos(60 * Math.PI / 180));
+
+        // Random
+        console.log('random');
+        console.log(Math.random()); // Zwraca od 0 do 1
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+        console.log(getRandomInt(0, 2)); // Będzie zwracać 0 lub 1
+
+        // Min i max
+        console.log('Min i max');
+        console.log(Math.min(5, 7, 3, 0, 1, -5));
+        console.log(Math.max(5, 7, 3, 0, 1, -5));
+
+        // PI
+        console.log(Math.PI);
+    </script>
+</body>
+</html>
