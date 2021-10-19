@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>15</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <table>
+        <tr>
+            <td>1</td>
+            <td>
+                <input id="1" type="number" value="0"/>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>
+                <input id="2" type="number" value="0"/>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>
+                <input id="3" type="number" value="0"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>suma</td>
+            <td>
+                <input id="suma" type="number" value="0" disabled/>
+            </td>
+        </tr>
+        <tr>
+            <td>średnia</td>
+            <td>
+                <input id="srednia" type="number" value="0" disabled/>
+            </td>
+        </tr>
+        <tr>
+            <td>ceil</td>
+            <td>
+                <input id="ceil" type="number" value="0" disabled/>
+            </td>
+        </tr>
+        <tr>
+            <td>floor</td>
+            <td>
+                <input id="floor" type="number" value="0" disabled/>
+            </td>
+        </tr>
+        <tr>
+            <td>round</td>
+            <td>
+                <input id="round" type="number" value="0" disabled/>
+            </td>
+        </tr>
+    </table>
+    <button id="oblicz">Oblicz</button>
+    <script>
+        document.getElementById('oblicz').addEventListener('click', () => {
+            const liczby = [];
+            for (let i = 1; i <= 3; i++) {
+                liczby.push(+document.getElementById(`${i}`).value);
+            }
+
+            const suma = liczby.reduce((previous, value) => previous + value, 0);
+            document.getElementById('suma').value = suma;
+
+            const srednia = suma / liczby.length;
+            document.getElementById('srednia').value = srednia;
+
+            const funkcje = ['ceil', 'floor', 'round'];
+            funkcje.forEach((funkcja) => document.getElementById(funkcja).value = Math[funkcja](srednia));
+        });
+    </script>
+</body>
+</html>
