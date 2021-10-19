@@ -29,9 +29,8 @@
             <td>j<sup>3</sup></td>
         </tr>
     </table>
-    <button id="oblicz">Oblicz</button>
     <script>
-        document.getElementById('oblicz').addEventListener('click', () => {
+        document.getElementById('r').addEventListener('change', () => {
             const r = +document.getElementById('r').value;
             const P = 4 * Math.PI * Math.pow(r, 2);
             const V = 4 / 3 * Math.PI * Math.pow(r, 3);

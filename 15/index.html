@@ -10,19 +10,19 @@
         <tr>
             <td>1</td>
             <td>
-                <input id="1" type="number" value="0"/>
+                <input id="a" type="number" value="0"/>
             </td>
         </tr>
         <tr>
             <td>2</td>
             <td>
-                <input id="2" type="number" value="0"/>
+                <input id="b" type="number" value="0"/>
             </td>
         </tr>
         <tr>
             <td>3</td>
             <td>
-                <input id="3" type="number" value="0"/>
+                <input id="c" type="number" value="0"/>
             </td>
         </tr>
 
@@ -57,13 +57,9 @@
             </td>
         </tr>
     </table>
-    <button id="oblicz">Oblicz</button>
     <script>
-        document.getElementById('oblicz').addEventListener('click', () => {
-            const liczby = [];
-            for (let i = 1; i <= 3; i++) {
-                liczby.push(+document.getElementById(`${i}`).value);
-            }
+        function onChange() {
+            const liczby = ['a', 'b', 'c'].map((value) => +document.getElementById(value).value);
 
             const suma = liczby.reduce((previous, value) => previous + value, 0);
             document.getElementById('suma').value = suma;
@@ -73,7 +69,9 @@
 
             const funkcje = ['ceil', 'floor', 'round'];
             funkcje.forEach((funkcja) => document.getElementById(funkcja).value = Math[funkcja](srednia));
-        });
+        }
+
+        ['a', 'b', 'c'].forEach((value) => document.getElementById(value).addEventListener('change', onChange));
     </script>
 </body>
 </html>
