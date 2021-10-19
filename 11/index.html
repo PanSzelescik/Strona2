@@ -7,11 +7,12 @@
 </head>
 <body>
     <script>
-        for (let x = 1; x <= 100; x++) {
-            console.log(x + (100 - x));
-        }
-        for (let y = 100; y >= 1; y--) {
-            console.log(y + (100 - y));
+        let x = 1;
+        let y = 100;
+        while (x <= 100) {
+            console.log(x + y);
+            x++;
+            y--;
         }
     </script>
 </body>
