@@ -8,9 +8,15 @@
         body {
             margin: 0;
         }
+
+        td {
+            width: 6.5px;
+            height: 6.5px;
+        }
     </style>
 </head>
 <body>
+    <table id="table" cellspacing="0"></table>
     <script>
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
@@ -28,15 +34,23 @@
             height = (window.innerHeight / 2) - 1;
         }
 
-        document.write('<table cellspacing="0">');
+        const table = document.getElementById('table');
+
+        function animate() {
+            let content = '';
             for (let row = 0; row < height; row++) {
-                document.write('<tr>');
+                content += '<tr>';
                     for (let col = 0; col < width; col++) {
-                        document.write(`<td style="background-color: ${getRandomColor()}"></td>`);
+                        content += `<td style="background-color: ${getRandomColor()}"></td>`;
                     }
-                document.write('</tr>');
+                content += '</tr>';
             }
-        document.write('</table>');
+            table.innerHTML = content;
+
+            window.requestAnimationFrame(animate);
+        }
+
+        window.requestAnimationFrame(animate);
     </script>
 </body>
 </html>
