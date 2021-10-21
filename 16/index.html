@@ -20,8 +20,10 @@
             return `rgb(${getRandomInt(0, 255)},${getRandomInt(0, 255)},${getRandomInt(0, 255)})`
         }
 
-        const width = 120/*window.innerWidth*/;
-        const height = 100/*window.innerHeight*/;
+        //const width = 120;
+        //const height = 100;
+        const width = window.innerWidth / 2;
+        const height = window.innerHeight / 2;
 
         document.write('<table cellspacing="0">');
             for (let row = 0; row < height; row++) {
