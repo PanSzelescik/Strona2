@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Paint</title>
+    <meta name="viewport" content="width=device-width">
+    <style>
+        body {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="paint" width="500" height="500"></canvas>
+    <input id="color" type="color" value="#222222"/>
+    <input id="grubosc" type="number" value="2" min="0"/>
+    <script>
+        const inputColor = document.getElementById('color');
+        const inputGrubosc = document.getElementById('grubosc');
+        const canvas = document.getElementById('paint');
+        const ctx = canvas.getContext('2d');
+
+        ctx.strokeStyle = '#222222';
+        ctx.lineWith = 2;
+
+        let drawing = false;
+        let mousePos = {x: 0, y: 0};
+        let lastPos = mousePos;
+
+        canvas.addEventListener('mousedown', (e) => { // Naciśnięcie LPM
+            drawing = true;
+            lastPos = getPos(e);
+        }, false);
+        canvas.addEventListener('mouseup', () => drawing = false, false); // Puszczenie LPM
+        canvas.addEventListener('mousemove', (e) => mousePos = getPos(e), false); // Ruszenie myszką
+
+        inputColor.addEventListener('change', () => ctx.strokeStyle = inputColor.value);
+        inputGrubosc.addEventListener('change', () => ctx.lineWith = inputGrubosc.value);
+
+        function getPos(mouseEvent) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: mouseEvent.clientX - rect.left,
+                y: mouseEvent.clientY - rect.top
+            }
+        }
+
+        function render() {
+            window.requestAnimationFrame(render);
+            if (!drawing) return;
+
+            ctx.moveTo(lastPos.x, lastPos.y);
+            ctx.lineTo(mousePos.x, mousePos.y);
+            ctx.stroke();
+            lastPos = mousePos;
+        }
+
+        window.requestAnimationFrame(render);
+    </script>
+</body>
+</html>
