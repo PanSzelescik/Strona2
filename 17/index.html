@@ -6,25 +6,68 @@
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
-    <p>Twoje hasło to:</p>
-    <p id="haslo"></p>
+    <table>
+        <tr>
+            <td>Użyj cyfr</td>
+            <td><input id="cyfry" type="checkbox" checked/></td>
+        </tr>
+        <tr>
+            <td>Użyj małych liter</td>
+            <td><input id="male_litery" type="checkbox" checked/></td>
+        </tr>
+        <tr>
+            <td>Użyj wielkich liter</td>
+            <td><input id="wielkie_litery" type="checkbox" checked/></td>
+        </tr>
+        <tr>
+            <td>Użyj - oraz _</td>
+            <td><input id="kreski" type="checkbox"/></td>
+        </tr>
+        <tr>
+            <td>Długość hasła</td>
+            <td><input id="dlugosc" type="number" value="10" min="1"/></td>
+        </tr>
+        <tr>
+            <td>Wygenerowane hasło</td>
+            <td><input id="haslo" type="text" disabled/></td>
+        </tr>
+    </table>
+    <button id="generate">Generuj!</button>
     <script>
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
         }
 
         const cyfry = '0123456789';
-        const litery = 'qwertyuiopasdfghjklzxcvbnm';
-        const wielkie_litery = litery.toUpperCase();
-        const znaki = cyfry + litery + wielkie_litery + '-_';
-        const dlugosc_hasla = 10;
-        let haslo = '';
+        const male_litery = 'qwertyuiopasdfghjklzxcvbnm';
+        const wielkie_litery = male_litery.toUpperCase();
+        const kreski = '-_';
 
-        for (let i = 0; i < dlugosc_hasla; i++) {
-            haslo += znaki[getRandomInt(0, znaki.length)];
-        }
-        
-        document.getElementById('haslo').innerText = haslo;
+
+        document.getElementById('generate').addEventListener('click', () => {
+            const dlugosc_hasla = +document.getElementById('dlugosc').value;
+            let znaki = '';
+            
+            if (document.getElementById('cyfry').checked) {
+                znaki += cyfry;
+            }
+            if (document.getElementById('male_litery').checked) {
+                znaki += male_litery;
+            }
+            if (document.getElementById('wielkie_litery').checked) {
+                znaki += wielkie_litery;
+            }
+            if (document.getElementById('kreski').checked) {
+                znaki += kreski;
+            }
+
+            let haslo = '';
+            for (let i = 0; i < dlugosc_hasla; i++) {
+                haslo += znaki[getRandomInt(0, znaki.length)];
+            }
+
+            document.getElementById('haslo').value = haslo;
+        });
     </script>
 </body>
 </html>
