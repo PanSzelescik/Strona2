@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>17</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <p>Twoje hasło to:</p>
+    <p id="haslo"></p>
+    <script>
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        const cyfry = '0123456789';
+        const litery = 'qwertyuiopasdfghjklzxcvbnm';
+        const wielkie_litery = litery.toUpperCase();
+        const znaki = cyfry + litery + wielkie_litery + '-_';
+        const dlugosc_hasla = 10;
+        let haslo = '';
+
+        for (let i = 0; i < dlugosc_hasla; i++) {
+            haslo += znaki[getRandomInt(0, znaki.length)];
+        }
+        
+        document.getElementById('haslo').innerText = haslo;
+    </script>
+</body>
+</html>

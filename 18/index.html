@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>18</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <table>
+        <tr>
+            <td>a</td>
+            <td><input id="a" type="number" value="0" disabled/></td>
+        </tr>
+        <tr>
+            <td>b</td>
+            <td><input id="b" type="number" value="0" disabled/></td>
+        </tr>
+        <tr>
+            <td>suma</td>
+            <td><input id="suma" type="number" value="0" disabled/></td>
+        </tr>
+    </table>
+    <script>
+        function getRandomNumber() {
+            const min = 30;
+            const max = 99;
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        const a = getRandomNumber();
+        const b = getRandomNumber();
+        const suma = a + b;
+
+        document.getElementById('a').value = a;
+        document.getElementById('b').value = b;
+        document.getElementById('suma').value = suma;
+    </script>
+</body>
+</html>

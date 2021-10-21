@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>16</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <script>
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        function getRandomColor() {
+            return `rgb(${getRandomInt(0, 255)},${getRandomInt(0, 255)},${getRandomInt(0, 255)})`
+        }
+
+        document.write('<table>');
+            for (let row = 0; row < 100; row++) {
+                document.write('<tr>');
+                    for (let col = 0; col < 120; col++) {
+                        document.write(`<td style="background-color: ${getRandomColor()}"></td>`);
+                    }
+                document.write('</tr>');
+            }
+        document.write('</table>');
+    </script>
+</body>
+</html>
