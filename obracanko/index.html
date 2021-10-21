@@ -15,25 +15,19 @@
         let i = 0;
         const zdjecie = document.getElementById('zdjecie');
 
-        async function work() {
-            while (working) {
+        function work() {
+            if (working) {
                 zdjecie.style.transform = `rotate(${i}deg)`;
                 i++;
                 if (i > 360) {
                     i = 0;
                 }
-                await wait(1);
             }
+            window.requestAnimationFrame(work);
         }
 
-        document.getElementById('stop').addEventListener('click', () => {
-            working = !working;
-            if (working) {
-                work();
-            }
-        });
-
-        work();
+        document.getElementById('stop').addEventListener('click', () => working = !working);
+        window.requestAnimationFrame(work);
     </script>
 </body>
 </html>
