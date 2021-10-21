@@ -20,10 +20,13 @@
             return `rgb(${getRandomInt(0, 255)},${getRandomInt(0, 255)},${getRandomInt(0, 255)})`
         }
 
-        //const width = 120;
-        //const height = 100;
-        const width = window.innerWidth / 2;
-        const height = window.innerHeight / 2;
+        let width = 120;
+        let height = 100;
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('fullscreen')) {
+            width = window.innerWidth / 2;
+            height = (window.innerHeight / 2) - 1;
+        }
 
         document.write('<table cellspacing="0">');
             for (let row = 0; row < height; row++) {
