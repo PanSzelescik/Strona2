@@ -54,12 +54,20 @@
         // Random
         console.log('random');
         console.log(Math.random()); // Zwraca od 0 do 1
-        function getRandomInt(min, max) { // <min, max)
-            min = Math.ceil(min);
-            max = Math.floor(max);
+
+        console.log('getRandomInt');
+        function getRandomInt(min, max) { // <min, max), funkcja ze stackoverflow
+            min = Math.ceil(min); // W sumie to jest zbędne
+            max = Math.floor(max); // W sumie to jest zbędne
             return Math.floor(Math.random() * (max - min)) + min;
         }
-        console.log(getRandomInt(0, 2)); // Będzie zwracać 0 lub 1
+        console.log(getRandomInt(0, 2)); // Wylosuje 0 lub 1
+
+        console.log('getRandomNumber');
+        function getRandomNumber(min, max) { // <min, max>, funkcja Fimiaka
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+        console.log(getRandomNumber(1, 10)); // Wylosuje 1, 2, 3, 4, 5, 6, 7, 8, 9 lub 10
 
         // Min i max
         console.log('Min i max');
@@ -69,6 +77,13 @@
         // PI
         console.log('PI');
         console.log(Math.PI);
+
+        // toString()
+        console.log('toString()');
+        const a = 150;
+        console.log(a.toString()); // Zamiana na string
+        console.log(a.toString(2)); // Zamiana liczby na system dwójkowy, można wpisać 2-36
+        console.log(a.toString(36));
     </script>
 </body>
 </html>
