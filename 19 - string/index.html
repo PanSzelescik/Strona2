@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>19 - string</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <script>
+        const tekst = "Dzień dobry, hej, cześć";
+
+        console.log('Długość');
+        console.log(tekst.length);
+
+        console.log('Wzięcie n znaku');
+        console.log(tekst.charAt(4));
+        console.log(tekst[4]); // mój sposób
+
+        console.log('Zamiana na tablicę znaków');
+        console.log([...tekst]); // mój sposób
+
+        console.log('WIELKIE');
+        console.log(tekst.toUpperCase());
+
+        console.log('małe');
+        console.log(tekst.toLowerCase());
+
+        console.log('Zwrócenie pierwszego indeksu gdzie jest znak/ciąg');
+        console.log(tekst.indexOf('dobry'));
+        console.log(tekst.indexOf('z'));
+        console.log(tekst.indexOf('Dobry')); // -1 jeśli nie ma
+
+        console.log('Zwrócenie ostaniego indeksu gdzie jest znak/ciąg');
+        console.log(tekst.lastIndexOf('dobry'));
+        console.log(tekst.lastIndexOf('z'));
+        console.log(tekst.lastIndexOf('Dobry')); // -1 jeśli nie ma
+
+        console.log('Sprawdzenie czy string zawiera znak/ciąg');
+        console.log(tekst.lastIndexOf('dobry') !== -1);
+        console.log(tekst.lastIndexOf('Dobry') !== -1);
+        console.log(tekst.includes('dobry')); // mój sposób
+        console.log(tekst.includes('Dobry')); // mój sposób
+
+        const url = 'http://stronka.pl/plik.php';
+
+        console.log('Ucinanie tekstu (slice)'); // tekst.slice(od_kiedy, ?do_kiedy), do_kiedy niewymagane, ale musi być większe od od_kiedy
+        console.log(url.slice(url.lastIndexOf('.'))); // Zwróci rozszerzenie
+        console.log(url.slice(url.lastIndexOf('/') + 1, url.lastIndexOf('.'))); // Zwróci nazwę
+        console.log(tekst.slice(6, 10)); // Wypisze litery 7-10
+
+        console.log('Jest także podobny do slice substring, trochę mądrzejszy');
+        console.log(tekst.substring(8, 4));
+
+        console.log('substr'); // tekst.substr(od_kiedy, ile_znakow)
+        console.log(tekst.substr(7, 2));
+
+        console.log('Zamiana tekstu'); // replace zamienia tylko 1 raz!
+        console.log(tekst.replace('dobry', 'zły'));
+        console.log(tekst.replace(' ', '')); // Usuwanie - dajemy pusty string
+        console.log(tekst.replaceAll(' ', ''));
+
+        console.log('Dzielenie tekstu');
+        console.log(tekst.split(' ')); // mój sposób
+
+        /**
+         * 1. Wyciagac adres email ze zmiennej
+         * 2. W dowolnym tekscie podanym przez uzytkownika wyszukac czy inny tekst rowniez podany przez usera
+         * 3. W dowolnym tekscie podanym przez uzytkownika policz ile wystepuje samoglosek
+         */
+    </script>
+</body>
+</html>
