@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>21</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Tekst 1.</td>
+            <td><input id="a" type="text"/></td>
+        </tr>
+        <tr>
+            <td>Tekst 2.</td>
+            <td><input id="b" type="text"/></td>
+        </tr>
+        <tr>
+            <td>Czy 1 zawiera 2?</td>
+            <td><input id="czy_zawiera" type="text" value="Tak" disabled/></td>
+        </tr>
+    </table>
+    <button id="check">Sprawdź</button>
+    <script>
+        document.getElementById('check').addEventListener('click', () => {
+            const a = document.getElementById('a').value;
+            const b = document.getElementById('b').value;
+
+            document.getElementById('czy_zawiera').value = a.includes(b) ? 'Tak' : 'Nie';
+        });
+    </script>
+</body>
+</html>
