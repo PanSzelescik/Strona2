@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>22</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Tekst</td>
+            <td><input id="text" type="text"/></td>
+        </tr>
+        <tr>
+            <td>Ilość samogłosek</td>
+            <td><input id="ilosc" type="number" value="0" disabled/></td>
+        </tr>
+    </table>
+    <button id="check">Sprawdź</button>
+    <script>
+        const samogloski = 'ęeyuióoąa'.split('');
+        document.getElementById('check').addEventListener('click', () => {
+            const text = document.getElementById('text').value;
+            let amount = 0;
+            
+            [...text].forEach((char) => {
+                if (samogloski.includes(char)) {
+                    amount++;
+                }
+            });
+
+            document.getElementById('ilosc').value = amount;
+        });
+    </script>
+</body>
+</html>
