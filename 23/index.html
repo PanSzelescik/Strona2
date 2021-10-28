@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>23</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <label>
+        Podaj tekst:
+        <input type="text" id="text"/>
+        <button onclick="changeText()">Zmień tekst</button>
+    </label><br>
+    <label>
+        Wybierz kolor tła:
+        <button onclick="changeBackgroundColor('red')">Czerwony</button>
+        <button onclick="changeBackgroundColor('blue')">Niebieski</button>
+        <button onclick="changeBackgroundColor('yellow')">Żółty</button>
+    </label><br>
+    <label>
+        Wybierz rodzaj obramowania:
+        <select id="border_style" onchange="changeBorderStyle(this)">
+            <option value="dashed">Kropkowana</option>
+        </select>
+    </label><br>
+    <label>
+        Kolor tekstu:
+        <input type="color" value="#000000" onchange="changeColor(this)"/>
+    </label><br>
+    <label>
+        Podaj rozmiar tekstu:
+        <input type="number" min="0" value="0" onchange="changeFontSize(this)"/>
+    </label><br>
+    <label>
+        Kolor obramowania:
+        <input type="color" value="#000000" onchange="changeBorderColor(this)"/>
+    </label><br>
+    <label>
+        Grubość obramowania:
+        <input type="number" min="0" value="0" onchange="changeBorderWidth(this)"/>
+    </label><br>
+    <button onclick="uppercase()">Zamień na duże litery</button>
+    <button onclick="lowercase()">Zamień na małe litery</button>
+    <br>Ustaw:
+    <label>
+        Pogrubiony:
+        <input type="checkbox" onchange="changeFontWeight(this)"/>
+    </label>
+    <label>
+        Pochylony:
+        <input type="checkbox" onchange="changeFontStyle(this)"/>
+    </label>
+    <label>
+        Podkreślony:
+        <input type="checkbox" onchange="changeTextDecoration(this)"/>
+    </label>
+    <p id="tekst">Tutaj będzie twój tekst</p>
+    <script>
+        function changeText() {
+            document.getElementById('tekst').innerText = document.getElementById('text').value;
+        }
+
+        function changeBackgroundColor(color) {
+            document.getElementById('tekst').style.backgroundColor = color;
+        }
+
+        function changeBorderStyle({value}) {
+            document.getElementById('tekst').style.borderStyle = value;
+        }
+
+        function changeColor({value}) {
+            document.getElementById('tekst').style.color = value;
+        }
+
+        function changeFontSize({value}) {
+            document.getElementById('tekst').style.fontSize = `${value}px`;
+        }
+
+        function changeBorderColor({value}) {
+            document.getElementById('tekst').style.borderColor = value;
+        }
+
+        function changeBorderWidth({value}) {
+            document.getElementById('tekst').style.borderWidth = `${value}px`;
+        }
+
+        function uppercase() {
+            const element = document.getElementById('tekst');
+            element.innerText = element.innerText.toUpperCase();
+        }
+
+        function lowercase() {
+            const element = document.getElementById('tekst');
+            element.innerText = element.innerText.toLowerCase();
+        }
+
+        function changeFontWeight({checked}) {
+            document.getElementById('tekst').style.fontWeight = checked ? 'bold' : 'normal';
+        }
+
+        function changeFontStyle({checked}) {
+            document.getElementById('tekst').style.fontStyle = checked ? 'italic' : 'normal';
+        }
+
+        function changeTextDecoration({checked}) {
+            document.getElementById('tekst').style.textDecoration = checked ? 'underline' : 'none';
+        }
+    </script>
+</body>
+</html>
