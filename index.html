@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <title>Strona2</title>
     <meta name="viewport" content="width=device-width">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
 <body>
 <div id="main">
@@ -23,10 +31,10 @@
                 throw err;
             })
             .then(({tree = []}) => tree.filter(({type}) => type === 'tree'))
-            .then((dirs) => dirs.map(({path}) => `<li><a href="/Strona2/${encodeURIComponent(path)}/">${path}</a> (<a href="https://github.com/PanSzelescik/Strona2/tree/main/${encodeURIComponent(path)}/">Zobacz kod</a>)</li>`))
+            .then((dirs) => dirs.map(({path}) => `<tr><td><a href="/Strona2/${encodeURIComponent(path)}/">${path}</a></td><td><a href="https://github.com/PanSzelescik/Strona2/tree/main/${encodeURIComponent(path)}/">zobacz kod</a></td></tr>`))
             .then((list) => {
                 if (list.length > 0) {
-                    setText(`<ul>${list.join('')}</ul>`);
+                    setText(`<h1>Zadanka</h1></p><table>${list.join('')}</table>`);
                 } else {
                     setText('<p>Nie znaleziono żadnych folderów ☹️</p>')
                 }
