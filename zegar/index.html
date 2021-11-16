@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zegar</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+<table>
+    <tr>
+        <td>
+            <p id="hours"></p>
+        </td>
+        <td>:</td>
+        <td>
+            <p id="minutes"></p>
+        </td>
+        <td>:</td>
+        <td>
+            <p id="seconds"></p>
+        </td>
+        <td>:</td>
+        <td>
+            <p id="milliseconds"></p>
+        </td>
+    </tr>
+</table>
+<body>
+    <script>
+        const hours = document.getElementById('hours');
+        const minutes = document.getElementById('minutes');
+        const seconds = document.getElementById('seconds');
+        const milliseconds = document.getElementById('milliseconds');
+
+        function change() {
+            const now = new Date();
+
+            hours.innerText = now.getHours();
+            minutes.innerText = now.getMinutes();
+            seconds.innerText = now.getSeconds();
+            milliseconds.innerText = now.getMilliseconds();
+
+            window.requestAnimationFrame(change);
+        }
+
+        window.requestAnimationFrame(change);
+    </script>
+</body>
+</html>
