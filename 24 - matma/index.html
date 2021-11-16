@@ -5,6 +5,10 @@
     <title>Nauka matematyki</title>
     <meta name="viewport" content="width=device-width">
     <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
         body {
             margin: 0;
         }
@@ -36,8 +40,33 @@
             background-color: dodgerblue;
         }
 
+        #dzialanie, #wynik {
+            font-size: 60px;
+        }
+
+        #wynik {
+            background-color: transparent;
+            width: 100px;
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
         .center-poziom {
             text-align: center;
+        }
+
+        .right-poziom {
+            text-align: right;
         }
 
         .center-pion {
@@ -54,7 +83,7 @@
         <button class="type" data-znak="/">Dzielenie</button>
     </nav>
     <div id="nauka">
-        <div id="ilosc"></div>
+        <div id="ilosc" class="right-poziom"></div>
         <div class="center-poziom">
             <label id="dzialanie" for="wynik"></label>
             <input id="wynik" type="number" min="0"/>
@@ -79,7 +108,7 @@
     let prawidlowy_wynik; // Prawidłowy wynik a znak b
     let nr_pytania = 0; // Numer obecnego pytania
     let ilosc_poprawnych = 0; // Ilość udzielonych poprawnych odpowiedzi
-    let ilosc_pytan = 2; // Ilość pytań, Infinity jeśli to nie tryb testowy
+    let ilosc_pytan = Infinity; // Ilość pytań, Infinity jeśli to nie tryb testowy
     let sprawdzanie = false; // Czy obecnie odpowiedź jest sprawdzana
 
     const div_nauka = document.getElementById('nauka');
@@ -111,7 +140,9 @@
         return 0;
     }
 
-    function setNumbers(min, max) {
+    function setNumbers() {
+        const min = 0;
+        const max = znak === '*' ? 10 : 100;
         prawidlowy_wynik = -1;
         
         // Bez wyników negatywnych, oraz dla dzielenia a nie może być równe 0, wynik nie może być Infinity lub NaN i nie może być liczbą z przecinkiem
@@ -142,11 +173,11 @@
             return zakoncz();
         }
 
-        setNumbers(0, 10);
+        setNumbers();
         div_dzialanie.innerText = `${a} ${znak} ${b} = `;
 
         nr_pytania++;
-        div_ilosc.innerText = `Pytanie ${nr_pytania}/${ilosc_pytan}`;
+        div_ilosc.innerText = ilosc_pytan === Infinity ? `Pytanie ${nr_pytania}` : `Pytanie ${nr_pytania}/${ilosc_pytan}`;
 
         input_wynik.value = ""; // Czyści inputa
         input_wynik.focus(); // Ustawia kursor w inpucie, dzięki czemu można od razu pisać
