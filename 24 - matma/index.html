@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Nauka matematyki</title>
+    <meta name="viewport" content="width=device-width">
+    <style>
+        body {
+            margin: 0;
+        }
+
+        h1 {
+            margin: 0;
+            text-align: center;
+            background-color: cornflowerblue;
+        }
+
+        nav {
+            display: flex;
+        }
+
+        .type {
+            width: 25%;
+            height: 40px;
+            border: none;
+            text-align: center;
+            cursor: pointer;
+            background-color: deepskyblue;
+        }
+
+        .type.active {
+            background-color: lightseagreen;
+        }
+
+        .type:hover {
+            background-color: dodgerblue;
+        }
+
+        .center-poziom {
+            text-align: center;
+        }
+
+        .center-pion {
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nauka matematyki</h1>
+    <nav>
+        <button class="type" data-znak="+">Dodawanie</button>
+        <button class="type" data-znak="-">Odejmowanie</button>
+        <button class="type" data-znak="*">Mnożenie</button>
+        <button class="type" data-znak="/">Dzielenie</button>
+    </nav>
+    <div id="nauka">
+        <div id="ilosc"></div>
+        <div class="center-poziom">
+            <label id="dzialanie" for="wynik"></label>
+            <input id="wynik" type="number" min="0"/>
+        </div>
+        <div class="center-poziom">
+            <button id="sprawdz">Sprawdź</button>
+        </div>
+        <div class="center-poziom">
+            <p id="text"></button>
+        </div>
+    </div>
+    <div id="koniec" class="center-poziom" style="display: none;">
+        <h2>Koniec!</h1>
+        <div id="ilosc_poprawnych"></div>
+        <button id="again">Spróbuj ponownie</button>
+    </div>
+</body>
+<script>
+    let a; // Pierwsza liczba
+    let b; // Druga liczba
+    let znak = '+'; // Znak
+    let prawidlowy_wynik; // Prawidłowy wynik a znak b
+    let nr_pytania = 0; // Numer obecnego pytania
+    let ilosc_poprawnych = 0; // Ilość udzielonych poprawnych odpowiedzi
+    let ilosc_pytan = 2; // Ilość pytań, Infinity jeśli to nie tryb testowy
+    let sprawdzanie = false; // Czy obecnie odpowiedź jest sprawdzana
+
+    const div_nauka = document.getElementById('nauka');
+    const div_koniec = document.getElementById('koniec');
+
+    const input_wynik = document.getElementById('wynik');
+    const div_dzialanie = document.getElementById('dzialanie');
+    const div_ilosc = document.getElementById('ilosc');
+    const p_text = document.getElementById('text');
+    const div_ilosc_poprawnych = document.getElementById('ilosc_poprawnych');
+
+    const types = Object.fromEntries([...document.getElementsByClassName('type')].map((element) => [element.dataset.znak, element])); // znak - element
+
+    function getRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function obliczWynik(a, b, znak) {
+        switch (znak) {
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case '*':
+                return a * b;
+            case '/':
+                return a / b;
+        }
+        return 0;
+    }
+
+    function setNumbers(min, max) {
+        prawidlowy_wynik = -1;
+        
+        // Bez wyników negatywnych, oraz dla dzielenia a nie może być równe 0, wynik nie może być Infinity lub NaN i nie może być liczbą z przecinkiem
+        while (prawidlowy_wynik < 0 || (znak === '/' && (a === 0 || prawidlowy_wynik === Infinity || prawidlowy_wynik === NaN || prawidlowy_wynik !== Math.round(prawidlowy_wynik)))) {
+            a = getRandomNumber(min, max);
+            b = getRandomNumber(min, max);
+            prawidlowy_wynik = obliczWynik(a, b, znak);
+        }
+    }
+
+    function rozpocznij() {
+        Object.values(types).forEach((type) => type.classList.remove('active')); // Usuń klasy active
+        types[znak].classList.add('active'); // Dodaj klasę active do odpowiedniego typu
+
+        nr_pytania = 0;
+        ilosc_poprawnych = 0;
+
+        div_koniec.style.display = 'none'; // Ukryj diva koniec
+        div_nauka.style.display = null; // Pokaż diva nauka
+
+        wylosuj();
+    }
+
+    function wylosuj() {
+        document.body.style.backgroundColor = null; // Czyści kolor
+
+        if (nr_pytania >= ilosc_pytan) {
+            return zakoncz();
+        }
+
+        setNumbers(0, 10);
+        div_dzialanie.innerText = `${a} ${znak} ${b} = `;
+
+        nr_pytania++;
+        div_ilosc.innerText = `Pytanie ${nr_pytania}/${ilosc_pytan}`;
+
+        input_wynik.value = ""; // Czyści inputa
+        input_wynik.focus(); // Ustawia kursor w inpucie, dzięki czemu można od razu pisać
+
+        p_text.innerText = '';
+    }
+
+    function sprawdz() {
+        if (sprawdzanie) return;
+
+        sprawdzanie = true;
+        const wynik = +input_wynik.value;
+
+        if (wynik === prawidlowy_wynik) {
+            document.body.style.backgroundColor = 'green';
+            p_text.innerText = 'Dobrze!';
+            ilosc_poprawnych++;
+        } else {
+            document.body.style.backgroundColor = 'red';
+            p_text.innerText = `Prawidłowy wynik: ${prawidlowy_wynik}`;
+        }
+
+        setTimeout(() => {
+            sprawdzanie = false;
+            wylosuj();
+        }, 1500);
+    }
+
+    function zakoncz() {
+        div_ilosc_poprawnych.innerText = `${ilosc_poprawnych}/${ilosc_pytan}`;
+
+        div_nauka.style.display = 'none'; // Ukryj diva nauka
+        div_koniec.style.display = null; // Pokaż diva koniec
+    }
+
+    // Pozwala zatwierdzać wpisany wynik Enterem
+    document.addEventListener('keyup', ({key}) => {
+        if (event.key === "Enter") {
+            sprawdz();
+        }
+    });
+
+    // Pozwala zatwierdzać wpisany wynik przyciskiem
+    document.getElementById('sprawdz').addEventListener('click', () => sprawdz());
+
+    // Pozwala rozpocząć test jeszcze raz
+    document.getElementById('again').addEventListener('click', () => rozpocznij());
+    
+    // Zmienia znak zależnie od wybranego typu
+    Object.values(types).forEach((type) => type.addEventListener('click', (element) => {
+        znak = element.srcElement.dataset.znak;
+        rozpocznij();
+    }));
+
+    rozpocznij();
+</script>
+</html>
