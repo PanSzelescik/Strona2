@@ -24,7 +24,7 @@
         }
 
         .type {
-            width: 25%;
+            width: 20%;
             height: 40px;
             border: none;
             text-align: center;
@@ -81,6 +81,7 @@
         <button class="type" data-znak="-">Odejmowanie</button>
         <button class="type" data-znak="*">Mnożenie</button>
         <button class="type" data-znak="/">Dzielenie</button>
+        <button class="type" data-znak="test">Test</button>
     </nav>
     <div id="nauka">
         <div id="ilosc" class="right-poziom"></div>
@@ -141,6 +142,11 @@
     }
 
     function setNumbers() {
+        if (ilosc_pytan !== Infinity) {
+            const chars = Object.keys(types);
+            znak = chars[getRandomNumber(0, chars.length - 2)];
+        }
+
         const min = 0;
         const max = znak === '*' ? 10 : 100;
         prawidlowy_wynik = -1;
@@ -155,7 +161,11 @@
 
     function rozpocznij() {
         Object.values(types).forEach((type) => type.classList.remove('active')); // Usuń klasy active
-        types[znak].classList.add('active'); // Dodaj klasę active do odpowiedniego typu
+        if (ilosc_pytan === Infinity) { // Dodaj klasę active do odpowiedniego typu
+            types[znak].classList.add('active');
+        } else {
+            types.test.classList.add('active');
+        }
 
         nr_pytania = 0;
         ilosc_poprawnych = 0;
@@ -228,7 +238,13 @@
     
     // Zmienia znak zależnie od wybranego typu
     Object.values(types).forEach((type) => type.addEventListener('click', (element) => {
-        znak = element.srcElement.dataset.znak;
+        const char = element.srcElement.dataset.znak;
+        if (char === 'test') {
+            ilosc_pytan = 10;
+        } else {
+            ilosc_pytan = Infinity;
+            znak = element.srcElement.dataset.znak;
+        }
         rozpocznij();
     }));
 
