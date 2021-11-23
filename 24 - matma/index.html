@@ -118,7 +118,7 @@
             <button id="sprawdz" class="button">Sprawdź wynik</button>
         </div>
         <div class="center-poziom">
-            <p id="text"></button>
+            <p id="text"></p>
         </div>
         <div id="time" class="right-poziom"></div>
     </div>
@@ -127,230 +127,230 @@
         <button id="again" class="button">Spróbuj ponownie</button>
         <table id="table" class="center-poziom center-pion" border="1"></table>
     </div>
-</body>
-<script>
-    let a; // Pierwsza liczba
-    let b; // Druga liczba
-    let znak = '+'; // Znak
-    let prawidlowy_wynik; // Prawidłowy wynik a znak b
-    let nr_pytania = 0; // Numer obecnego pytania
-    let ilosc_poprawnych = 0; // Ilość udzielonych poprawnych odpowiedzi
-    let ilosc_pytan = Infinity; // Ilość pytań, Infinity jeśli to nie tryb testowy
-    let sprawdzanie = false; // Czy obecnie odpowiedź jest sprawdzana
-    let lista_dzialan = []; // Lista działań podczas testu
-    let date; // Date
-    let timeout; // obiekt Timeout
-    let interval; // obiekt Interval
-    let miganie = false; // zmienna do migania przy opuszczeniu testu
-    let stop = false; // jeśli true, czas nie jest odświeżany
-
-    const div_nauka = document.getElementById('nauka');
-    const div_koniec = document.getElementById('koniec');
-
-    const input_wynik = document.getElementById('wynik');
-    const div_dzialanie = document.getElementById('dzialanie');
-    const div_ilosc = document.getElementById('ilosc');
-    const p_text = document.getElementById('text');
-    const div_ilosc_poprawnych = document.getElementById('ilosc_poprawnych');
-    const div_poprawnych = document.getElementById('poprawnych');
-    const div_time = document.getElementById('time');
-    const button_sprawdz = document.getElementById('sprawdz');
-
-    const types = Object.fromEntries([...document.getElementsByClassName('type')].map((element) => [element.dataset.znak, element])); // znak - element
-
-    function getRandomNumber(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    }
-
-    function obliczWynik(a, b, znak) {
-        switch (znak) {
-            case '+':
-                return a + b;
-            case '-':
-                return a - b;
-            case '*':
-                return a * b;
-            case '/':
-                return a / b;
-        }
-        return 0;
-    }
-
-    function isTest() {
-        return ilosc_pytan !== Infinity;
-    }
-
-    function setNumbers() {
-        if (isTest()) {
-            const chars = Object.keys(types);
-            znak = chars[getRandomNumber(0, chars.length - 2)];
-        }
-
-        const min = 0;
-        const max = znak === '*' ? 10 : 100;
-        prawidlowy_wynik = -1;
-        
-        // Bez wyników negatywnych, oraz dla dzielenia a nie może być równe 0, wynik nie może być Infinity lub NaN i nie może być liczbą z przecinkiem
-        while (prawidlowy_wynik < 0 || (znak === '/' && (a === 0 || prawidlowy_wynik === Infinity || prawidlowy_wynik === NaN || prawidlowy_wynik !== Math.round(prawidlowy_wynik)))) {
-            a = getRandomNumber(min, max);
-            b = getRandomNumber(min, max);
-            prawidlowy_wynik = obliczWynik(a, b, znak);
-        }
-    }
-
-    function rozpocznij() {
-        clean();
-
-        Object.values(types).forEach((type) => type.classList.remove('active')); // Usuń klasy active
-        if (isTest()) { // Dodaj klasę active do odpowiedniego typu
-            types.test.classList.add('active');
-        } else {
-            types[znak].classList.add('active');
-        }
-
-        nr_pytania = 0;
-        ilosc_poprawnych = 0;
-
-        div_koniec.style.display = 'none'; // Ukryj diva koniec
-        div_nauka.style.display = null; // Pokaż diva nauka
-
-        lista_dzialan = [];
-
-        wylosuj();
-    }
-
-    function wylosuj() {
-        document.body.style.backgroundColor = null; // Czyści kolor
-        button_sprawdz.disabled = false;
-
-        if (nr_pytania >= ilosc_pytan) {
-            return zakoncz();
-        }
-
-        setNumbers();
-        div_dzialanie.innerText = `${a} ${znak} ${b} = `;
-
-        nr_pytania++;
-        div_ilosc.innerText = ilosc_pytan === Infinity ? `Pytanie ${nr_pytania}` : `Pytanie ${nr_pytania}/${ilosc_pytan}`;
-        div_poprawnych.innerText = `Ilość punktów: ${ilosc_poprawnych}`;
-
-        input_wynik.value = ''; // Czyści inputa
-        input_wynik.focus(); // Ustawia kursor w inpucie, dzięki czemu można od razu pisać
-
-        p_text.innerText = '';
-
-        date = new Date();
-
-        stop = false;
-        window.requestAnimationFrame(() => changeTime());
-    }
-
-    function changeTime() {
-        if (stop) return;
-
-        div_time.innerText = `${(new Date() - date) / 1000} s`;
-        window.requestAnimationFrame(changeTime);
-    }
-
-    function sprawdz() {
-        if (sprawdzanie) return;
-
-        button_sprawdz.disabled = true;
-        sprawdzanie = true;
-        stop = true;
-        const czas = new Date() - date;
-        const wynik = +input_wynik.value;
-        let time = 1500;
-
-        if (wynik === prawidlowy_wynik) {
-            document.body.style.backgroundColor = 'green';
-            p_text.innerText = 'Dobrze!';
-            ilosc_poprawnych++;
-        } else {
-            document.body.style.backgroundColor = 'red';
-            p_text.innerText = `Prawidłowy wynik: ${prawidlowy_wynik}`;
-            time = 2000;
-        }
-
-        if (isTest()) {
-            lista_dzialan.push({
-                dzialanie: `${a}${znak}${b}`,
-                prawidlowy_wynik,
-                podany_wynik: wynik,
-                czas
-            });
-        }
-
-        timeout = setTimeout(() => {
-            sprawdzanie = false;
-            wylosuj();
-        }, time);
-    }
-
-    function zakoncz(opuszczono = false) {
-        if (opuszczono) {
-            div_ilosc_poprawnych.innerText = 'Wykryto opuszczenie testu!';
-            interval = setInterval(() => {
-                if (miganie) {
-                    document.body.style.backgroundColor = 'red';
-                } else {
-                    document.body.style.backgroundColor = null;
-                }
-                miganie = !miganie;
-            }, 600);
-        } else {
-            div_ilosc_poprawnych.innerText = `Twój wynik: ${ilosc_poprawnych}/${ilosc_pytan}`;
-            document.getElementById('table').innerHTML = ['<tr><td>Działanie</td><td>Prawidłowy wynik</td><td>Twój wynik</td><td>Czas</td></tr>', ...lista_dzialan.map((object) => `<tr><td>${object.dzialanie}</td><td>${object.prawidlowy_wynik}</td><td style="background-color: ${object.prawidlowy_wynik === object.podany_wynik ? 'green' : 'red'};">${object.podany_wynik}</td><td>${Math.ceil(object.czas / 1000)} s</td></tr>`)].join('');
-        }
-
-        div_nauka.style.display = 'none'; // Ukryj diva nauka
-        div_koniec.style.display = null; // Pokaż diva koniec
-    }
-
-    function opuszczenieTestu(e) {
-        if (!isTest() || interval) return;
-
-        clean();
-        zakoncz(true);
-    }
-
-    function clean() {
-        clearInterval(interval);
-        clearTimeout(timeout);
-        sprawdzanie = false;
-        stop = true;
-    }
-
-    // Pozwala zatwierdzać wpisany wynik Enterem
-    document.addEventListener('keyup', ({key}) => {
-        if (event.key === 'Enter') {
-            sprawdz();
-        }
-    });
-
-    // Pozwala zatwierdzać wpisany wynik przyciskiem
-    button_sprawdz.addEventListener('click', () => sprawdz());
-
-    // Pozwala rozpocząć test jeszcze raz
-    document.getElementById('again').addEventListener('click', () => rozpocznij());
+    <script>
+        let a; // Pierwsza liczba
+        let b; // Druga liczba
+        let znak = '+'; // Znak
+        let prawidlowy_wynik; // Prawidłowy wynik a znak b
+        let nr_pytania = 0; // Numer obecnego pytania
+        let ilosc_poprawnych = 0; // Ilość udzielonych poprawnych odpowiedzi
+        let ilosc_pytan = Infinity; // Ilość pytań, Infinity jeśli to nie tryb testowy
+        let sprawdzanie = false; // Czy obecnie odpowiedź jest sprawdzana
+        let lista_dzialan = []; // Lista działań podczas testu
+        let date; // Date
+        let timeout; // obiekt Timeout
+        let interval; // obiekt Interval
+        let miganie = false; // zmienna do migania przy opuszczeniu testu
+        let stop = false; // jeśli true, czas nie jest odświeżany
     
-    // Zmienia znak zależnie od wybranego typu
-    Object.values(types).forEach((type) => type.addEventListener('click', (element) => {
-        const char = element.srcElement.dataset.znak;
-        if (char === 'test') {
-            ilosc_pytan = 10;
-        } else {
-            ilosc_pytan = Infinity;
-            znak = char;
+        const div_nauka = document.getElementById('nauka');
+        const div_koniec = document.getElementById('koniec');
+    
+        const input_wynik = document.getElementById('wynik');
+        const div_dzialanie = document.getElementById('dzialanie');
+        const div_ilosc = document.getElementById('ilosc');
+        const p_text = document.getElementById('text');
+        const div_ilosc_poprawnych = document.getElementById('ilosc_poprawnych');
+        const div_poprawnych = document.getElementById('poprawnych');
+        const div_time = document.getElementById('time');
+        const button_sprawdz = document.getElementById('sprawdz');
+    
+        const types = Object.fromEntries([...document.getElementsByClassName('type')].map((element) => [element.dataset.znak, element])); // znak - element
+    
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
         }
+    
+        function obliczWynik(a, b, znak) {
+            switch (znak) {
+                case '+':
+                    return a + b;
+                case '-':
+                    return a - b;
+                case '*':
+                    return a * b;
+                case '/':
+                    return a / b;
+            }
+            return 0;
+        }
+    
+        function isTest() {
+            return ilosc_pytan !== Infinity;
+        }
+    
+        function setNumbers() {
+            if (isTest()) {
+                const chars = Object.keys(types);
+                znak = chars[getRandomNumber(0, chars.length - 2)];
+            }
+    
+            const min = 0;
+            const max = znak === '*' ? 10 : 100;
+            prawidlowy_wynik = -1;
+            
+            // Bez wyników negatywnych, oraz dla dzielenia a nie może być równe 0, wynik nie może być Infinity lub NaN i nie może być liczbą z przecinkiem
+            while (prawidlowy_wynik < 0 || (znak === '/' && (a === 0 || prawidlowy_wynik === Infinity || prawidlowy_wynik === NaN || prawidlowy_wynik !== Math.round(prawidlowy_wynik)))) {
+                a = getRandomNumber(min, max);
+                b = getRandomNumber(min, max);
+                prawidlowy_wynik = obliczWynik(a, b, znak);
+            }
+        }
+    
+        function rozpocznij() {
+            clean();
+    
+            Object.values(types).forEach((type) => type.classList.remove('active')); // Usuń klasy active
+            if (isTest()) { // Dodaj klasę active do odpowiedniego typu
+                types.test.classList.add('active');
+            } else {
+                types[znak].classList.add('active');
+            }
+    
+            nr_pytania = 0;
+            ilosc_poprawnych = 0;
+    
+            div_koniec.style.display = 'none'; // Ukryj diva koniec
+            div_nauka.style.display = null; // Pokaż diva nauka
+    
+            lista_dzialan = [];
+    
+            wylosuj();
+        }
+    
+        function wylosuj() {
+            document.body.style.backgroundColor = null; // Czyści kolor
+            button_sprawdz.disabled = false;
+    
+            if (nr_pytania >= ilosc_pytan) {
+                return zakoncz();
+            }
+    
+            setNumbers();
+            div_dzialanie.innerText = `${a} ${znak} ${b} = `;
+    
+            nr_pytania++;
+            div_ilosc.innerText = ilosc_pytan === Infinity ? `Pytanie ${nr_pytania}` : `Pytanie ${nr_pytania}/${ilosc_pytan}`;
+            div_poprawnych.innerText = `Ilość punktów: ${ilosc_poprawnych}`;
+    
+            input_wynik.value = ''; // Czyści inputa
+            input_wynik.focus(); // Ustawia kursor w inpucie, dzięki czemu można od razu pisać
+    
+            p_text.innerText = '';
+    
+            date = new Date();
+    
+            stop = false;
+            window.requestAnimationFrame(changeTime);
+        }
+    
+        function changeTime() {
+            if (stop) return;
+    
+            div_time.innerText = `${(new Date() - date) / 1000} s`;
+            window.requestAnimationFrame(changeTime);
+        }
+    
+        function sprawdz() {
+            if (sprawdzanie) return;
+    
+            button_sprawdz.disabled = true;
+            sprawdzanie = true;
+            stop = true;
+            const czas = new Date() - date;
+            const wynik = +input_wynik.value;
+            let time = 1500;
+    
+            if (wynik === prawidlowy_wynik) {
+                document.body.style.backgroundColor = 'green';
+                p_text.innerText = 'Dobrze!';
+                ilosc_poprawnych++;
+            } else {
+                document.body.style.backgroundColor = 'red';
+                p_text.innerText = `Prawidłowy wynik: ${prawidlowy_wynik}`;
+                time = 2000;
+            }
+    
+            if (isTest()) {
+                lista_dzialan.push({
+                    dzialanie: `${a}${znak}${b}`,
+                    prawidlowy_wynik,
+                    podany_wynik: wynik,
+                    czas
+                });
+            }
+    
+            timeout = setTimeout(() => {
+                sprawdzanie = false;
+                wylosuj();
+            }, time);
+        }
+    
+        function zakoncz(opuszczono = false) {
+            if (opuszczono) {
+                div_ilosc_poprawnych.innerText = 'Wykryto opuszczenie testu!';
+                interval = setInterval(() => {
+                    if (miganie) {
+                        document.body.style.backgroundColor = 'red';
+                    } else {
+                        document.body.style.backgroundColor = null;
+                    }
+                    miganie = !miganie;
+                }, 600);
+            } else {
+                div_ilosc_poprawnych.innerText = `Twój wynik: ${ilosc_poprawnych}/${ilosc_pytan}`;
+                document.getElementById('table').innerHTML = ['<tr><td>Działanie</td><td>Prawidłowy wynik</td><td>Twój wynik</td><td>Czas</td></tr>', ...lista_dzialan.map((object) => `<tr><td>${object.dzialanie}</td><td>${object.prawidlowy_wynik}</td><td style="background-color: ${object.prawidlowy_wynik === object.podany_wynik ? 'green' : 'red'};">${object.podany_wynik}</td><td>${Math.ceil(object.czas / 1000)} s</td></tr>`)].join('');
+            }
+    
+            div_nauka.style.display = 'none'; // Ukryj diva nauka
+            div_koniec.style.display = null; // Pokaż diva koniec
+        }
+    
+        function opuszczenieTestu(e) {
+            if (!isTest() || interval) return;
+    
+            clean();
+            zakoncz(true);
+        }
+    
+        function clean() {
+            clearInterval(interval);
+            clearTimeout(timeout);
+            sprawdzanie = false;
+            stop = true;
+        }
+    
+        // Pozwala zatwierdzać wpisany wynik Enterem
+        document.addEventListener('keyup', ({key}) => {
+            if (event.key === 'Enter') {
+                sprawdz();
+            }
+        });
+    
+        // Pozwala zatwierdzać wpisany wynik przyciskiem
+        button_sprawdz.addEventListener('click', () => sprawdz());
+    
+        // Pozwala rozpocząć test jeszcze raz
+        document.getElementById('again').addEventListener('click', () => rozpocznij());
+        
+        // Zmienia znak zależnie od wybranego typu
+        Object.values(types).forEach((type) => type.addEventListener('click', (element) => {
+            const char = element.srcElement.dataset.znak;
+            if (char === 'test') {
+                ilosc_pytan = 10;
+            } else {
+                ilosc_pytan = Infinity;
+                znak = char;
+            }
+            rozpocznij();
+        }));
+    
+        // Wykrycie opuszczenia testu
+        window.addEventListener('visibilitychange', opuszczenieTestu); // Zmiana karty
+        window.addEventListener('blur', opuszczenieTestu); // Opuszczenie przeglądarki
+    
+        // Przy otwarciu strony rozpoczyna dodawanie
         rozpocznij();
-    }));
-
-    // Wykrycie opuszczenia testu
-    window.addEventListener('visibilitychange', opuszczenieTestu); // Zmiana karty
-    window.addEventListener('blur', opuszczenieTestu); // Opuszczenie przeglądarki
-
-    // Przy otwarciu strony rozpoczyna dodawanie
-    rozpocznij();
-</script>
+    </script>
+</body>
 </html>
