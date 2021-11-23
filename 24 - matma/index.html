@@ -120,6 +120,7 @@
         <div class="center-poziom">
             <p id="text"></button>
         </div>
+        <div id="time" class="right-poziom"></div>
     </div>
     <div id="koniec" class="center-poziom" style="display: none;">
         <div id="ilosc_poprawnych"></div>
@@ -138,9 +139,10 @@
     let sprawdzanie = false; // Czy obecnie odpowiedź jest sprawdzana
     let lista_dzialan = []; // Lista działań podczas testu
     let date; // Date
-    let timeout;
-    let interval;
-    let miganie = false;
+    let timeout; // obiekt Timeout
+    let interval; // obiekt Interval
+    let miganie = false; // zmienna do migania przy opuszczeniu testu
+    let stop = false; // jeśli true, czas nie jest odświeżany
 
     const div_nauka = document.getElementById('nauka');
     const div_koniec = document.getElementById('koniec');
@@ -151,6 +153,8 @@
     const p_text = document.getElementById('text');
     const div_ilosc_poprawnych = document.getElementById('ilosc_poprawnych');
     const div_poprawnych = document.getElementById('poprawnych');
+    const div_time = document.getElementById('time');
+    const button_sprawdz = document.getElementById('sprawdz');
 
     const types = Object.fromEntries([...document.getElementsByClassName('type')].map((element) => [element.dataset.znak, element])); // znak - element
 
@@ -217,6 +221,7 @@
 
     function wylosuj() {
         document.body.style.backgroundColor = null; // Czyści kolor
+        button_sprawdz.disabled = false;
 
         if (nr_pytania >= ilosc_pytan) {
             return zakoncz();
@@ -229,18 +234,31 @@
         div_ilosc.innerText = ilosc_pytan === Infinity ? `Pytanie ${nr_pytania}` : `Pytanie ${nr_pytania}/${ilosc_pytan}`;
         div_poprawnych.innerText = `Ilość punktów: ${ilosc_poprawnych}`;
 
-        input_wynik.value = ""; // Czyści inputa
+        input_wynik.value = ''; // Czyści inputa
         input_wynik.focus(); // Ustawia kursor w inpucie, dzięki czemu można od razu pisać
 
         p_text.innerText = '';
 
         date = new Date();
+
+        stop = false;
+        window.requestAnimationFrame(() => changeTime());
+    }
+
+    function changeTime() {
+        if (stop) return;
+
+        div_time.innerText = `${(new Date() - date) / 1000} s`;
+        window.requestAnimationFrame(changeTime);
     }
 
     function sprawdz() {
         if (sprawdzanie) return;
 
+        button_sprawdz.disabled = true;
         sprawdzanie = true;
+        stop = true;
+        const czas = new Date() - date;
         const wynik = +input_wynik.value;
         let time = 1500;
 
@@ -259,7 +277,7 @@
                 dzialanie: `${a}${znak}${b}`,
                 prawidlowy_wynik,
                 podany_wynik: wynik,
-                czas: new Date() - date
+                czas
             });
         }
 
@@ -300,6 +318,7 @@
         clearInterval(interval);
         clearTimeout(timeout);
         sprawdzanie = false;
+        stop = true;
     }
 
     // Pozwala zatwierdzać wpisany wynik Enterem
@@ -310,7 +329,7 @@
     });
 
     // Pozwala zatwierdzać wpisany wynik przyciskiem
-    document.getElementById('sprawdz').addEventListener('click', () => sprawdz());
+    button_sprawdz.addEventListener('click', () => sprawdz());
 
     // Pozwala rozpocząć test jeszcze raz
     document.getElementById('again').addEventListener('click', () => rozpocznij());
@@ -322,13 +341,14 @@
             ilosc_pytan = 10;
         } else {
             ilosc_pytan = Infinity;
-            znak = element.srcElement.dataset.znak;
+            znak = char;
         }
         rozpocznij();
     }));
 
-    window.addEventListener('visibilitychange', opuszczenieTestu);
-    window.addEventListener('blur', opuszczenieTestu);
+    // Wykrycie opuszczenia testu
+    window.addEventListener('visibilitychange', opuszczenieTestu); // Zmiana karty
+    window.addEventListener('blur', opuszczenieTestu); // Opuszczenie przeglądarki
 
     // Przy otwarciu strony rozpoczyna dodawanie
     rozpocznij();
