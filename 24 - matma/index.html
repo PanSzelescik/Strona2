@@ -11,6 +11,7 @@
 
         body {
             margin: 0;
+            transition: 0.5s;
         }
 
         h1 {
@@ -44,6 +45,10 @@
             font-size: 60px;
         }
 
+        #text {
+            font-size: 30px;
+        }
+
         #wynik {
             background-color: transparent;
             width: 100px;
@@ -72,9 +77,28 @@
         .center-pion {
             margin: auto;
         }
+
+        .button {
+            margin: 20px;
+            font-size: 24px;
+        }
+
+        td {
+            padding: 2px;
+        }
+
+        .absolute {
+            position: absolute;
+            width: 100%;
+        }
+
+        #div-dzialanie {
+            padding-top: 10px;
+        } 
     </style>
 </head>
 <body>
+    <div class="absolute right-poziom"></div>
     <h1>Nauka matematyki</h1>
     <nav>
         <button class="type" data-znak="+">Dodawanie</button>
@@ -84,13 +108,14 @@
         <button class="type" data-znak="test">Test</button>
     </nav>
     <div id="nauka">
+        <div id="poprawnych" class="absolute"></div>
         <div id="ilosc" class="right-poziom"></div>
-        <div class="center-poziom">
+        <div id="div-dzialanie" class="center-poziom">
             <label id="dzialanie" for="wynik"></label>
             <input id="wynik" type="number" min="0"/>
         </div>
         <div class="center-poziom">
-            <button id="sprawdz">Sprawdź wynik</button>
+            <button id="sprawdz" class="button">Sprawdź wynik</button>
         </div>
         <div class="center-poziom">
             <p id="text"></button>
@@ -98,8 +123,8 @@
     </div>
     <div id="koniec" class="center-poziom" style="display: none;">
         <div id="ilosc_poprawnych"></div>
-        <button id="again">Spróbuj ponownie</button>
-        <table id="table" class="center-poziom"></table>
+        <button id="again" class="button">Spróbuj ponownie</button>
+        <table id="table" class="center-poziom center-pion" border="1"></table>
     </div>
 </body>
 <script>
@@ -113,6 +138,9 @@
     let sprawdzanie = false; // Czy obecnie odpowiedź jest sprawdzana
     let lista_dzialan = []; // Lista działań podczas testu
     let date; // Date
+    let timeout;
+    let interval;
+    let miganie = false;
 
     const div_nauka = document.getElementById('nauka');
     const div_koniec = document.getElementById('koniec');
@@ -122,6 +150,7 @@
     const div_ilosc = document.getElementById('ilosc');
     const p_text = document.getElementById('text');
     const div_ilosc_poprawnych = document.getElementById('ilosc_poprawnych');
+    const div_poprawnych = document.getElementById('poprawnych');
 
     const types = Object.fromEntries([...document.getElementsByClassName('type')].map((element) => [element.dataset.znak, element])); // znak - element
 
@@ -166,6 +195,8 @@
     }
 
     function rozpocznij() {
+        clean();
+
         Object.values(types).forEach((type) => type.classList.remove('active')); // Usuń klasy active
         if (isTest()) { // Dodaj klasę active do odpowiedniego typu
             types.test.classList.add('active');
@@ -195,7 +226,8 @@
         div_dzialanie.innerText = `${a} ${znak} ${b} = `;
 
         nr_pytania++;
-        div_ilosc.innerText = ilosc_pytan === Infinity ? `Pytanie ${nr_pytania}, poprawnie ${ilosc_poprawnych}` : `Pytanie ${nr_pytania}/${ilosc_pytan}`;
+        div_ilosc.innerText = ilosc_pytan === Infinity ? `Pytanie ${nr_pytania}` : `Pytanie ${nr_pytania}/${ilosc_pytan}`;
+        div_poprawnych.innerText = `Ilość punktów: ${ilosc_poprawnych}`;
 
         input_wynik.value = ""; // Czyści inputa
         input_wynik.focus(); // Ustawia kursor w inpucie, dzięki czemu można od razu pisać
@@ -231,24 +263,48 @@
             });
         }
 
-        setTimeout(() => {
+        timeout = setTimeout(() => {
             sprawdzanie = false;
             wylosuj();
         }, time);
     }
 
-    function zakoncz() {
-        div_ilosc_poprawnych.innerText = `Twój wynik: ${ilosc_poprawnych}/${ilosc_pytan}`;
+    function zakoncz(opuszczono = false) {
+        if (opuszczono) {
+            div_ilosc_poprawnych.innerText = 'Wykryto opuszczenie testu!';
+            interval = setInterval(() => {
+                if (miganie) {
+                    document.body.style.backgroundColor = 'red';
+                } else {
+                    document.body.style.backgroundColor = null;
+                }
+                miganie = !miganie;
+            }, 600);
+        } else {
+            div_ilosc_poprawnych.innerText = `Twój wynik: ${ilosc_poprawnych}/${ilosc_pytan}`;
+            document.getElementById('table').innerHTML = ['<tr><td>Działanie</td><td>Prawidłowy wynik</td><td>Twój wynik</td><td>Czas</td></tr>', ...lista_dzialan.map((object) => `<tr><td>${object.dzialanie}</td><td>${object.prawidlowy_wynik}</td><td style="background-color: ${object.prawidlowy_wynik === object.podany_wynik ? 'green' : 'red'};">${object.podany_wynik}</td><td>${Math.ceil(object.czas / 1000)} s</td></tr>`)].join('');
+        }
 
         div_nauka.style.display = 'none'; // Ukryj diva nauka
         div_koniec.style.display = null; // Pokaż diva koniec
+    }
 
-        document.getElementById('table').innerHTML = ['<tr><td>Działanie</td><td>Prawidłowy wynik</td><td>Twój wynik</td><td>Czas w sekundach</td></tr>', ...lista_dzialan.map((object) => `<tr><td>${object.dzialanie}</td><td>${object.prawidlowy_wynik}</td><td style="background-color: ${object.prawidlowy_wynik === object.podany_wynik ? 'green' : 'red'};">${object.podany_wynik}</td><td>${Math.ceil(object.czas / 1000)}</td></tr>`)].join('');
+    function opuszczenieTestu(e) {
+        if (!isTest() || interval) return;
+
+        clean();
+        zakoncz(true);
+    }
+
+    function clean() {
+        clearInterval(interval);
+        clearTimeout(timeout);
+        sprawdzanie = false;
     }
 
     // Pozwala zatwierdzać wpisany wynik Enterem
     document.addEventListener('keyup', ({key}) => {
-        if (event.key === "Enter") {
+        if (event.key === 'Enter') {
             sprawdz();
         }
     });
@@ -270,6 +326,9 @@
         }
         rozpocznij();
     }));
+
+    window.addEventListener('visibilitychange', opuszczenieTestu);
+    window.addEventListener('blur', opuszczenieTestu);
 
     // Przy otwarciu strony rozpoczyna dodawanie
     rozpocznij();
