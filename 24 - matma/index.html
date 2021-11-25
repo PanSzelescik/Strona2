@@ -94,7 +94,7 @@
 
         #div-dzialanie {
             padding-top: 10px;
-        } 
+        }
     </style>
 </head>
 <body>
@@ -161,7 +161,7 @@
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
     
-        function obliczWynik(a, b, znak) {
+        function obliczWynik() {
             switch (znak) {
                 case '+':
                     return a + b;
@@ -193,7 +193,7 @@
             while (prawidlowy_wynik < 0 || (znak === '/' && (a === 0 || prawidlowy_wynik === Infinity || prawidlowy_wynik === NaN || prawidlowy_wynik !== Math.round(prawidlowy_wynik)))) {
                 a = getRandomNumber(min, max);
                 b = getRandomNumber(min, max);
-                prawidlowy_wynik = obliczWynik(a, b, znak);
+                prawidlowy_wynik = obliczWynik();
             }
         }
     
@@ -231,7 +231,7 @@
             div_dzialanie.innerText = `${a} ${znak} ${b} = `;
     
             nr_pytania++;
-            div_ilosc.innerText = ilosc_pytan === Infinity ? `Pytanie ${nr_pytania}` : `Pytanie ${nr_pytania}/${ilosc_pytan}`;
+            div_ilosc.innerText = isTest() ? `Pytanie ${nr_pytania}/${ilosc_pytan}` : `Pytanie ${nr_pytania}`;
             div_poprawnych.innerText = `Ilość punktów: ${ilosc_poprawnych}`;
     
             input_wynik.value = ''; // Czyści inputa
@@ -307,7 +307,7 @@
             div_koniec.style.display = null; // Pokaż diva koniec
         }
     
-        function opuszczenieTestu(e) {
+        function opuszczenieTestu() {
             if (!isTest() || interval) return;
     
             clean();
@@ -323,7 +323,7 @@
     
         // Pozwala zatwierdzać wpisany wynik Enterem
         document.addEventListener('keyup', ({key}) => {
-            if (event.key === 'Enter') {
+            if (key === 'Enter') {
                 sprawdz();
             }
         });
