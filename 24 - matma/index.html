@@ -155,6 +155,7 @@
         const div_poprawnych = document.getElementById('poprawnych');
         const div_time = document.getElementById('time');
         const button_sprawdz = document.getElementById('sprawdz');
+        const table = document.getElementById('table');
     
         const types = Object.fromEntries([...document.getElementsByClassName('type')].map((element) => [element.dataset.znak, element])); // znak - element
     
@@ -213,7 +214,7 @@
     
             div_koniec.style.display = 'none'; // Ukryj diva koniec
             div_nauka.style.display = null; // Pokaż diva nauka
-            document.getElementById('table').innerHTML = '';
+            table.innerHTML = '';
     
             lista_dzialan = [];
     
@@ -301,7 +302,7 @@
                 }, 600);
             } else {
                 div_ilosc_poprawnych.innerText = `Twój wynik: ${ilosc_poprawnych}/${ilosc_pytan}`;
-                document.getElementById('table').innerHTML = ['<tr><td>Działanie</td><td>Prawidłowy wynik</td><td>Twój wynik</td><td>Czas</td></tr>', ...lista_dzialan.map((object) => `<tr><td>${object.dzialanie}</td><td>${object.prawidlowy_wynik}</td><td style="background-color: ${object.prawidlowy_wynik === object.podany_wynik ? 'green' : 'red'};">${object.podany_wynik}</td><td>${Math.ceil(object.czas / 1000)} s</td></tr>`)].join('');
+                table.innerHTML = ['<tr><td>Działanie</td><td>Prawidłowy wynik</td><td>Twój wynik</td><td>Czas</td></tr>', ...lista_dzialan.map((object) => `<tr><td>${object.dzialanie}</td><td>${object.prawidlowy_wynik}</td><td style="background-color: ${object.prawidlowy_wynik === object.podany_wynik ? 'green' : 'red'};">${object.podany_wynik}</td><td>${Math.ceil(object.czas / 1000)} s</td></tr>`)].join('');
             }
     
             div_nauka.style.display = 'none'; // Ukryj diva nauka
