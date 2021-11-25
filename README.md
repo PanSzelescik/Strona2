@@ -1,3 +1,3 @@
 # Strona2
 
-https://panszelescik.github.io/Strona2/
+Kliknij tutaj: https://panszelescik.github.io/Strona2/
