@@ -330,10 +330,10 @@
         });
     
         // Pozwala zatwierdzać wpisany wynik przyciskiem
-        button_sprawdz.addEventListener('click', () => sprawdz());
+        button_sprawdz.addEventListener('click', sprawdz);
     
         // Pozwala rozpocząć test jeszcze raz
-        document.getElementById('again').addEventListener('click', () => rozpocznij());
+        document.getElementById('again').addEventListener('click', rozpocznij);
         
         // Zmienia znak zależnie od wybranego typu
         Object.values(types).forEach((type) => type.addEventListener('click', (element) => {
