@@ -30,7 +30,7 @@
                 err.response = response;
                 throw err;
             })
-            .then(({tree = []}) => tree.filter(({type}) => type === 'tree'))
+            .then(({tree = []}) => tree.filter(({type}) => type === 'tree').sort((a, b) => a.path === 'PHP' ? -1 : 1))
             .then((dirs) => dirs.map(({path}) => `<tr><td><a href="/Strona2/${encodeURIComponent(path)}/">${path}</a></td><td><a href="https://github.com/PanSzelescik/Strona2/tree/main/${encodeURIComponent(path)}/">zobacz kod</a></td></tr>`))
             .then((list) => {
                 if (list.length > 0) {
