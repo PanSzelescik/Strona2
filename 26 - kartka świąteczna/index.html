@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wygeneruj kartkę świąteczną</title>
+    <meta name="viewport" content="width=device-width">
+    <style>
+        #kartka {
+            border-style: solid;
+            text-align: center;
+            padding: 10px;
+            background-size: 10%;
+        }
+
+        #obraz {
+            height: 300px;
+            mix-blend-mode: difference;
+        }
+
+        #kartka p {
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        #kto_zyczy {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <p>Tła:</p>
+    <label>
+        <input type="radio" name="background" value="1.jpg" required>
+        <img src="./background/1.jpg" alt="Tło numer 1" height="64">
+    </label>
+    <label>
+        <input type="radio" name="background" value="2.png" required>
+        <img src="./background/2.png" alt="Tło numer 2" height="64">
+    </label>
+    <label>
+        <input type="radio" name="background" value="3.jpg" required>
+        <img src="./background/3.jpg" alt="Tło numer 3" height="64">
+    </label>
+    <br>
+    <p>Obrazy:</p>
+    <label>
+        <input type="radio" name="image" value="1.jpg" required>
+        <img src="./image/1.jpg" alt="Obrazek numer 1" height="64">
+    </label>
+    <label>
+        <input type="radio" name="image" value="2.jpg" required>
+        <img src="./image/2.jpg" alt="Obrazek numer 2" height="64">
+    </label>
+    <br>
+    <label>
+        Tekst:
+        <textarea id="text"></textarea>
+    </label>
+    <br>
+    <label>
+        Kto życzy:
+        <input type="text" id="from" required>
+    </label>
+    <br>
+    <button id="wygeneruj">Wygeneruj</button>
+    <div id="kartka">
+        <h1>Wesołych świąt</h1>
+        <img id="obraz">
+        <p id="zyczenia"></p>
+        <p id="kto_zyczy"></p>
+    </div>
+    <script>
+        document.getElementById('wygeneruj').addEventListener('click', () => {
+            const background = document.querySelector('input[name="background"]:checked')?.value;
+            const image = document.querySelector('input[name="image"]:checked')?.value;
+            const text = document.getElementById('text').value;
+            const from = document.getElementById('from').value;
+
+            if (!background) {
+                alert('Wybierz tło!');
+                return;
+            }
+
+            if (!image) {
+                alert('Wybierz obrazek!');
+                return;
+            }
+
+            if (!text) {
+                alert('Wpisz tekst życzeń!');
+                return;
+            }
+
+            if (!from) {
+                alert('Wpisz kto życzy!');
+                return;
+            }
+
+            document.getElementById('kartka').style.backgroundImage = `url('./background/${background}')`;
+            document.getElementById('obraz').src = `./image/${image}`;
+            document.getElementById('zyczenia').innerText = text;
+            document.getElementById('kto_zyczy').innerText = `życzy\n${from}`;
+        });
+    </script>
+</body>
+</html>
