@@ -9,17 +9,22 @@
             border-style: solid;
             text-align: center;
             padding: 10px;
-            background-size: 10%;
+            background-size: 5%;
+            display: none;
         }
 
         #obraz {
             height: 300px;
-            mix-blend-mode: difference;
+        }
+
+        #kartka h1 {
+            font-size: 48px;
         }
 
         #kartka p {
             margin-left: 20%;
             margin-right: 20%;
+            font-size: 36px;
         }
 
         #kto_zyczy {
@@ -41,6 +46,10 @@
         <input type="radio" name="background" value="3.jpg" required>
         <img src="./background/3.jpg" alt="Tło numer 3" height="64">
     </label>
+    <label>
+        <input type="radio" name="background" value="custom" id="background-file-radio" required>
+        <input type="file" id="background-file" accept="image/*" required>
+    </label>
     <br>
     <p>Obrazy:</p>
     <label>
@@ -50,6 +59,10 @@
     <label>
         <input type="radio" name="image" value="2.jpg" required>
         <img src="./image/2.jpg" alt="Obrazek numer 2" height="64">
+    </label>
+    <label>
+        <input type="radio" name="image" value="custom" id="image-file-radio" required>
+        <input type="file" id="image-file" accept="image/*" required>
     </label>
     <br>
     <label>
@@ -70,13 +83,26 @@
         <p id="kto_zyczy"></p>
     </div>
     <script>
-        document.getElementById('wygeneruj').addEventListener('click', () => {
+        function readFromInput(id) {
+            return new Promise((resolve) => {
+                const element = document.getElementById(id);
+                const selectedFile = element.files[0];
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(selectedFile);
+            });
+        }
+
+        document.getElementById('background-file').addEventListener('change', () => document.getElementById('background-file-radio').checked = true);
+        document.getElementById('image-file').addEventListener('change', () => document.getElementById('image-file-radio').checked = true);
+
+        document.getElementById('wygeneruj').addEventListener('click', async () => {
             const background = document.querySelector('input[name="background"]:checked')?.value;
             const image = document.querySelector('input[name="image"]:checked')?.value;
             const text = document.getElementById('text').value;
             const from = document.getElementById('from').value;
 
-            if (!background) {
+            /*if (!background) {
                 alert('Wybierz tło!');
                 return;
             }
@@ -94,12 +120,29 @@
             if (!from) {
                 alert('Wpisz kto życzy!');
                 return;
+            }*/
+
+            console.log(background);
+            console.log(image);
+
+            const kartka = document.getElementById('kartka');
+
+            if (background === 'custom') {
+                kartka.style.backgroundImage = `url('${await readFromInput('background-file')}')`;
+            } else {
+                kartka.style.backgroundImage = `url('./background/${background}')`;
             }
 
-            document.getElementById('kartka').style.backgroundImage = `url('./background/${background}')`;
-            document.getElementById('obraz').src = `./image/${image}`;
+            if (image === 'custom') {
+                document.getElementById('obraz').src = await readFromInput('image-file');
+            } else {
+                document.getElementById('obraz').src = `./image/${image}`;
+            }
+
             document.getElementById('zyczenia').innerText = text;
             document.getElementById('kto_zyczy').innerText = `życzy\n${from}`;
+
+            kartka.style.display = 'block';
         });
     </script>
 </body>
