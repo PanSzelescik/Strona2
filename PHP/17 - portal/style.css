@@ -1,0 +1,39 @@
+#naglowek {
+    background-color: #5e8949;
+    text-align: center;
+}
+
+#menu {
+    background-color: #7d7d00;
+    width: 20%;
+}
+
+#main {
+    background-color: bisque;
+    width: 80%;
+}
+
+#stopka {
+    background-color: indianred;
+    text-align: right;
+}
+
+/* Usunięcie zbędnych przerw */
+body, h1, p {
+    margin: 0;
+}
+
+/* Wyśrodkowanie tabeli */
+table {
+    margin: 0 auto;
+}
+
+/* Wyśrodkowanie nazwy kontynentu */
+h2 {
+    text-align: center;
+    justify-content: center;
+}
+
+.flex {
+    display: flex;
+}
