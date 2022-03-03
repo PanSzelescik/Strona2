@@ -1,0 +1,56 @@
+body {
+    font-family: Helvetica;
+}
+
+body, footer p {
+    margin: 0;
+}
+
+#gorny-lewy, #gorny-prawy {
+    background-color: rgb(70, 130, 180);
+    color: white;
+    width: 25%;
+    height: 80px;
+}
+
+#gorny-srodkowy {
+    background-color: rgb(70, 130, 180);
+    color: white;
+    width: 50%;
+    height: 80px;
+    text-align: center;
+}
+
+#glowny {
+    background-color: rgb(224, 255, 255);
+    padding: 40px;
+}
+
+#dolny-lewy, #dolny-prawy {
+    background-color: rgb(70, 130, 180);
+    width: 50%;
+    height: 200px;
+    text-align: center;
+}
+
+footer {
+    background-color: rgb(224, 255, 255);
+}
+
+table {
+    border: blue solid 1px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    border: blue solid 1px;
+    background-color: blue;
+    color: white;
+
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
