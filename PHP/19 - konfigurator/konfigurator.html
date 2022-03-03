@@ -24,25 +24,17 @@
             <p>Podaj rozmiar czcionki w procentach, np. 200%</p>
             <input type="text" value="100%" onblur="changeSize(this.value)">
             <p>Czy rysunek ma mieć ramkę?</p>
-            <label>
-                <input type="checkbox" checked onchange="frame(this.checked)">
-                Rysuj ramkę
-            </label>
+            <input type="checkbox" checked onchange="frame(this.checked)">
+            Rysuj ramkę
             <p>Jaki jest typ punktora listy?</p>
-            <label>
-                <input type="radio" name="punktor" checked onchange="punktor('disc', this.checked)">
-                dysk
-            </label>
+            <input type="radio" name="punktor" checked onchange="punktor('disc', this.checked)">
+            dysk
             <br>
-            <label>
-                <input type="radio" name="punktor" onchange="punktor('square', this.checked)">
-                kwadrat
-            </label>
+            <input type="radio" name="punktor" onchange="punktor('square', this.checked)">
+            kwadrat
             <br>
-            <label>
-                <input type="radio" name="punktor" onchange="punktor('circle', this.checked)">
-                okrąg
-            </label>
+            <input type="radio" name="punktor" onchange="punktor('circle', this.checked)">
+            okrąg
         </div>
         <div id="prawy">
             <div class="flex">
