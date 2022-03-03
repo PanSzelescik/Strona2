@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Style w JavaScript</title>
+    <link rel="stylesheet" href="styl6.css">
+</head>
+<body>
+    <div class="flex">
+        <div id="lewy">
+            <h1>Konfigurator stylu</h1>
+            <p>Podaj kolor tła</p>
+            <button class="indigo" onclick="background('indigo')">Indigo</button>
+            <button class="steelblue" onclick="background('steelblue')">SteelBlue</button>
+            <button class="olive" onclick="background('olive')">Olive</button>
+            <p>Podaj kolor czcionki</p>
+            <select onchange="color(this.value)">
+                <option>White</option>
+                <option>Tan</option>
+                <option>Bisque</option>
+                <option>Plum</option>
+            </select>
+            <p>Podaj rozmiar czcionki w procentach, np. 200%</p>
+            <input type="text" value="100%" onblur="changeSize(this.value)">
+            <p>Czy rysunek ma mieć ramkę?</p>
+            <label>
+                <input type="checkbox" checked onchange="frame(this.checked)">
+                Rysuj ramkę
+            </label>
+            <p>Jaki jest typ punktora listy?</p>
+            <label>
+                <input type="radio" name="punktor" checked onchange="punktor('disc', this.checked)">
+                dysk
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="punktor" onchange="punktor('square', this.checked)">
+                kwadrat
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="punktor" onchange="punktor('circle', this.checked)">
+                okrąg
+            </label>
+        </div>
+        <div id="prawy">
+            <div class="flex">
+                <img id="rysunek" src="gibraltar.jpg" alt="półwysep Gibraltar">
+                <ul id="lista">
+                    <li>element 1</li>
+                    <li>element 2</li>
+                    <li>element 3</li>
+                </ul>
+            </div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
+            </p>
+        </div>
+    </div>
+    <footer>
+        Autor: XYZ
+    </footer>
+    <script>
+        const prawy = document.getElementById('prawy');
+        const rysunek = document.getElementById('rysunek');
+        const lista = document.getElementById('lista');
+
+        function background(color) {
+            prawy.style.backgroundColor = color;
+        }
+
+        function color(color) {
+            prawy.style.color = color;
+        }
+
+        function changeSize(size) {
+            prawy.style.fontSize = size;
+        }
+
+        function frame(bool) {
+            rysunek.style.border = bool ? null : 'none';
+        }
+
+        function punktor(type, checked) {
+            lista.style.listStyleType = checked ? type : null;
+        }
+    </script>
+</body>
+</html>

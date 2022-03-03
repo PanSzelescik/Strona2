@@ -1,0 +1,59 @@
+body, #prawy p {
+    margin: 0;
+}
+
+#lewy p {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+body {
+    font-family: Georgia;
+}
+
+.flex {
+    display: flex;
+}
+
+#lewy {
+    background-color: Maroon;
+    color: white;
+    height: 600px;
+    width: 30%;
+}
+
+#prawy {
+    background-color: Maroon;
+    color: white;
+    height: 600px;
+    width: 70%;
+
+    /* paski przewijania */
+}
+
+footer {
+    background-color: DimGray;
+    color: white;
+}
+
+p {
+    padding: 10px;
+}
+
+img {
+    padding: 10px;
+    border: white solid 1px;
+}
+
+.indigo {
+    background-color: Indigo;
+}
+
+.steelblue {
+    background-color: SteelBlue;
+}
+
+.olive {
+    background-color: Olive;
+}
