@@ -28,8 +28,7 @@ body {
     color: white;
     height: 600px;
     width: 70%;
-
-    /* paski przewijania */
+    overflow: auto;
 }
 
 footer {
