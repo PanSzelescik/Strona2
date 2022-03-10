@@ -1,0 +1,56 @@
+body, h1, h2, p {
+    margin: 0;
+}
+
+body {
+    font-family: Garamond;
+}
+
+.flex {
+    display: flex;
+}
+
+#baner {
+    background-color: SaddleBrown;
+    color: white;
+    text-align: center;
+    height: 50px;
+}
+
+#lewy {
+    background-color: Tan;
+    height: 500px;
+    width: 40%;
+}
+
+.prawy {
+    background-color: Tan;
+    width: 60%;
+}
+
+#prawy-gorny, #prawy-dolny {
+    height: 250px;
+}
+
+#stopka {
+    background-color: SaddleBrown;
+    color: white;
+}
+
+form {
+    background-color: SaddleBrown;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 300px;
+}
+
+input {
+    margin: 5px
+}
+
+#status:before {
+    content: "STATUS: ";
+}
