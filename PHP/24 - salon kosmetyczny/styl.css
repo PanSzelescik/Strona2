@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+}
+
+.flex {
+    display: flex;
+}
+
+body {
+    font-family: Garamond;
+}
+
+#lewy {
+    width: 25%;
+}
+
+#prawy {
+    width: 75%;
+}
+
+#lewy-pierwszy {
+    height: 500px;
+    background-color: Lavender;
+}
+
+#lewy-drugi {
+    height: 300px;
+    background-color: Lavender;
+}
+
+#prawy-pierwszy {
+    height: 150px;
+    background-color: Indigo;
+    color: white;
+    font-size: 200%;
+    text-align: center;
+}
+
+#prawy-drugi {
+    height: 650px;
+    background-color: Lavender;
+    font-size: 200%;
+    text-align: center;
+}
+
+#stopka {
+    background-color: Indigo;
+    color: white;
+    text-align: right;
+}
+
+ul {
+    list-style-type: square;
+}
+
+img {
+    padding: 5px;
+    margin: 10px;
+}
+
+img:hover {
+    padding: 4px;
+    border: solid 1px Indigo;
+}

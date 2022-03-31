@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Usługi kosmetyczne</title>
+    <link href="styl.css" rel="stylesheet">
+</head>
+<body>
+    <div class="flex">
+        <div id="lewy">
+            <div id="lewy-pierwszy">
+                <h2>W ofercie</h2>
+                <ul>
+                    <li>
+                        <a href="twarz.html">Zabiegi na twarz</a>
+                        <ol>
+                            <li>Piling</li>
+                            <li>Maska</li>
+                            <li>Regulacja brwi</li>
+                        </ol>
+                    </li>
+                    <li>Masaż</li>
+                    <li>Diety oczyszczające</li>
+                </ul>
+                <a href="index.html">Do strony głównej</a>
+            </div>
+            <div id="lewy-drugi">
+                <img src="obraz1.jpg" alt="Kosmetyczka">
+            </div>
+        </div>
+        <div id="prawy">
+            <div id="prawy-pierwszy">
+                <h1>Salon kosmetyczny</h1>
+            </div>
+            <div id="prawy-drugi">
+                <h4>Sprawdź cenę swojej wizyty</h4>
+                <input type="checkbox" id="piling"/>Piling<br>
+                <input type="checkbox" id="maska"/>Maska<br>
+                <input type="checkbox" id="masaz"/>Masaż twarzy<br>
+                <input type="checkbox" id="regulacja"/>Regulacja brwi<br>
+                <button id="button">Sprawdź cenę</button>
+                <p id="wynik"></p>
+                <script>
+                    const piling = document.getElementById('piling');
+                    const maska = document.getElementById('maska');
+                    const masaz = document.getElementById('masaz');
+                    const regulacja = document.getElementById('regulacja');
+
+                    const wynik = document.getElementById('wynik');
+
+                    document.getElementById('button').addEventListener('click', () => {
+                        let suma = 0;
+
+                        if (piling.checked) {
+                            suma += 45;
+                        }
+
+                        if (maska.checked) {
+                            suma += 30;
+                        }
+
+                        if (masaz.checked) {
+                            suma += 20;
+                        }
+
+                        if (regulacja.checked) {
+                            suma += 5;
+                        }
+
+                        wynik.innerText = `Cena zabiegów: ${suma}`;
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div id="stopka">
+        <p>Autor: 00000000000</p>
+    </div>
+</body>
+</html>
